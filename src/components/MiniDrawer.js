@@ -134,9 +134,12 @@ export default function MiniDrawer({ children }) {
         <List>
           {[
             { url: "", label: "Home" },
-            { url: "recipes", label: "Recipes" },
+            { url: "recipes", label: "Weekly" },
+            { url: "users", label: "My Recipes" },
             { url: "users", label: "Users" },
-            { url: "drafts", label: "Drafts" },
+            { url: "Approval", label: "Approval requests" },
+            { url: "Delete", label: "Delete Recipies" },
+            { url: "BlackList", label: "Blacklist Recipies" },
           ].map((item, index) => {
             const { label, url } = item;
             return (
