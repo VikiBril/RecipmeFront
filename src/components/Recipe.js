@@ -21,7 +21,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { weekNumber } from 'weeknumber';
-
+import PersonalRecipeData from './PersonalRecipeData';
 class Recipe extends Component {
 
   constructor(props) {
@@ -33,7 +33,7 @@ class Recipe extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOpen = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
-
+    this.renderPersonalRecipeData = this.handleClose.bind(this);
   }
 
   handleClickOpen(){
@@ -64,15 +64,33 @@ class Recipe extends Component {
     }).catch((err)=>console.log(err));
  };
 
+  renderPersonalRecipeData() {
+    if (this.props.recipeType == 1) {
+    return (<>
+            <Typography variant="body2" color="text.secondary">
+              {this.props.week}
+            </Typography>
+          
+            <Typography variant="body2" color="text.secondary">
+              {this.props.day}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {this.props.hour}
+            </Typography>
+          </>);}
+    return ({});
+  }
+
   render() {
+    const a = this.props.recipeType == 1;
     return (
       <Card className="Card" sx={{ maxWidth: 345 }}>
         <CardMedia
           component="img"
           height="140"
           image = {this.props.imgurl}
-          alt="aaaa"
-          title="bbbbb"
+          alt="image of recipe"
+          title="image of recipe"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -81,8 +99,8 @@ class Recipe extends Component {
           <Typography variant="body2" color="text.secondary">
             {this.props.description}
           </Typography>
-          <InputLabel id="demo-simple-select-label">Day</InputLabel>
-
+           {a? <PersonalRecipeData {...this.props}> </PersonalRecipeData>:null}
+           <InputLabel id="demo-simple-select-label">Day</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -115,6 +133,23 @@ class Recipe extends Component {
             <MenuItem value={4}>04:00</MenuItem>
             <MenuItem value={5}>05:00</MenuItem>
             <MenuItem value={6}>06:00</MenuItem>
+            <MenuItem value={0}>07:00</MenuItem>
+            <MenuItem value={1}>08:00</MenuItem>
+            <MenuItem value={2}>09:00</MenuItem>
+            <MenuItem value={3}>10:00</MenuItem>
+            <MenuItem value={4}>11:00</MenuItem>
+            <MenuItem value={5}>12:00</MenuItem>
+            <MenuItem value={6}>13:00</MenuItem>
+            <MenuItem value={3}>14:00</MenuItem>
+            <MenuItem value={4}>15:00</MenuItem>
+            <MenuItem value={5}>16:00</MenuItem>
+            <MenuItem value={6}>17:00</MenuItem>
+            <MenuItem value={5}>18:00</MenuItem>
+            <MenuItem value={6}>19:00</MenuItem>
+            <MenuItem value={3}>20:00</MenuItem>
+            <MenuItem value={4}>21:00</MenuItem>
+            <MenuItem value={5}>22:00</MenuItem>
+            <MenuItem value={6}>23:00</MenuItem>
           </Select>           
           <TextField id="outlined-basic" label="repeat" variant="standard"  
           onChange={event =>this.repeat= event.target.value } ></TextField> 

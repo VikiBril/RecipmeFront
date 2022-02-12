@@ -116,7 +116,7 @@ export default function MiniDrawer({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Viki Recipe App!
+            Recipe App!
           </Typography>
         </Toolbar>
       </AppBar>
@@ -134,7 +134,7 @@ export default function MiniDrawer({ children }) {
         <List>
           {[
             { url: "", label: "Home" },
-            { url: "recipes", label: "Weekly" },
+            { url: "recipes", label: "Weekly Schedule" },
             { url: "users", label: "My Recipes" },
             { url: "users", label: "Users" },
             { url: "Approval", label: "Approval requests" },

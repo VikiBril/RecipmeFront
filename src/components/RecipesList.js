@@ -27,7 +27,6 @@ class RecipesList extends Component {
     const recipeList = this.state.recipes.map((recipe) => {
       const props = {
         name: `${recipe['recipe']['label']}`,
-        title: ``,
         description: `${recipe['recipe']['ingredientLines']}`,
         imgurl: `${recipe['recipe']['images']['REGULAR']['url']}`,
       };
