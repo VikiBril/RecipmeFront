@@ -8,13 +8,15 @@ import MiniDrawer from "./components/MiniDrawer";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
 
+
+
 ReactDOM.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
       <App />
       <Router>
         <MiniDrawer>
-          <AppRouter />
+          {/* <AppRouter /> */}
         </MiniDrawer>
       </Router>
     </StyledEngineProvider>
