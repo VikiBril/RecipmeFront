@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import RecipesList from "./components/RecipesList";
-
+import PersonalRecipes from "./components/PersonalRecipies";
+import RecipeList from "./components/RecipesList"
+import WeeklySched from "./components/WeeklySched"
 export default class App extends Component {
   render() {
     return (
-      <div>
-        <RecipesList />
-      </div>
+      <>
+        <WeeklySched />
+      </>
     );
   }
 }
