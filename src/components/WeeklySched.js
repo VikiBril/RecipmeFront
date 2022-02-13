@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { weekNumber } from 'weeknumber';
 import ScheduleTable from './ScheduleTable';
+import {useSearchParams} from "react-router-dom";
+
 class WeeklySched extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +16,7 @@ class WeeklySched extends Component {
             this.createData('Dinner','Eclair', 262, 16.0, 24, 6.0),
             ];
         this.getRecipies = this.getRecipies.bind(this);
+
         }
 
     componentDidMount(){
@@ -21,7 +24,11 @@ class WeeklySched extends Component {
     }
 
     getRecipies() {
-        axios.get(`${this.url}/recipe?user=michal@gmail.com&week=${this.week}`)
+        const windowUrl = window.location.search;
+        const params = new URLSearchParams(windowUrl);
+        console.log(params.get("userId"));
+        const userId = params.get("userId") != null ? params.get("userId") :"michal@gmail.com";
+        axios.get(`${this.url}/recipe?user=${userId}&week=${this.week}`)
         .then((recipes) =>{
             const recipesDict = {}
             for (var i=1; i <= 7; i++) {

@@ -13,12 +13,11 @@ const styleFab = {
   boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
   backgroundColor: "#8fcbd9",
   color: "white",
-  marginTop: "35px",
-  marginLeft: "275px",
+  marginLeft: "5px",
   border: "2.10345px solid #FFFFFF",
 };
 const styleImg = {
-  marginLeft: "50%",
+  marginLeft: "35%",
   width:"200px",
   height:"250",
 };
@@ -68,10 +67,8 @@ class SearchComponent extends Component {
     return (
       <>
       <Box alignItems="center">
-        <div alignContent="center">
            <img src={Logo} alt="Logo" style={styleImg}/>
-        </div>
-        <BootstrapInput placeholder="Search by ingredients" sx={{ width: "670px", height: "100px" }} id="NameInput" onChange={event => this.searchTerm = event.target.value} />
+        <BootstrapInput placeholder="Search by ingredients" sx={{ padding: "2px",marginLeft:"5%",width: "670px", height: "100px" }} id="NameInput" onChange={event => this.searchTerm = event.target.value} />
           <Fab size="medium" style={styleFab} aria-label="search" onClick={event => this.props.searchRecipe(this.searchTerm)} >
             <SearchIcon />
           </Fab>

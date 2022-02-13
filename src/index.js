@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StyledEngineProvider } from "@mui/material/styles";
-import MiniDrawer from "./components/MiniDrawer";
-import AppRouter from "./components/AppRouter";
+import MiniDrawer from "./Components/MiniDrawer";
+import AppRouter from "./Routers/AppRouter";
 import { BrowserRouter  } from "react-router-dom";
 import "./index.css";
 

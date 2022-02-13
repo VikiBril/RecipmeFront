@@ -30,7 +30,7 @@ const styleFab = {
 const styleCard = {
   width: "293px",
   height: "261px",
-  fontFamily: "Alef",
+  fontFamily: "Arial",
   left: "50px",
   top: "114px",
   backgroundColor: "#FFFFFF",
@@ -55,7 +55,6 @@ class Recipe extends Component {
     this.handleClickOpen = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-
   handleClickOpen(){
     this.setState({ open: true });
   };
