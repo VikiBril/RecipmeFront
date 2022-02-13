@@ -15,7 +15,7 @@ class PersonalRecipes extends Component {
                       week:week,          
                       showAddForm: true,
                       recipeData:{},
-                      vacationUpdateIndex: 0};
+                      recipeUpdateIndex: 0};
         this.loadRecipies = this.loadRecipies.bind(this);
 
         this.borderCallback = null;
@@ -56,7 +56,7 @@ class PersonalRecipes extends Component {
       }
 
       delete(id) {
-        this.vacationsDataList = this.vacationsDataList.filter(vacation => vacation.id !== id)
+        this.recipesDataList = this.recipesDataList.filter(recipe => recipe.id !== id)
         this.displayAddForm();
       }
     
@@ -119,10 +119,10 @@ class PersonalRecipes extends Component {
         });
         return (<>
         <Grid container >
-        <Grid item container  rowSpacing={1} sx={{ maxWidth: "300px", marginLeft: "20px" }} xs={6}>
+        <Grid item container rowSpacing={1} sx={{ maxWidth: "400px", marginRight: "20px" }} xs={7}>
           {recipeList}
         </Grid>
-        <Grid item sx={{ marginLeft: "40px" }}>
+        <Grid item sx={{ marginLeft: "10px" , maxWidth: "400px" }}>
           <RecipeForms key={this.state.recipeData['url']} name={this.state.recipeData['name']}
             description={this.state.recipeData['description']}
             imgurl={this.state.recipeData['imgurl']}
@@ -131,9 +131,9 @@ class PersonalRecipes extends Component {
             hour= {this.state.recipeData['hour']}
             url= {this.state.recipeData['url']}
             recipeId={this.state.recipeData['_id']}
-              updateVacation={this.update} disableForm={this.displayAddForm}
+              updateRecipe={this.update} disableForm={this.displayAddForm}
               addRecipe={this.add}
-              showAddForm={this.state.showAddForm} />
+              showAddForm={this.state.showAddForm}  />
           
         </Grid>
       </Grid>

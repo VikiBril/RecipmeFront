@@ -5,32 +5,37 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import { Fab } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import DialogTitle from '@mui/material/DialogTitle';
 import { weekNumber } from 'weeknumber';
 import PersonalRecipeData from './PersonalRecipeData';
-
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 const styleFab = {
-  width: "35.76px",
-  height: "35.76px",
+  width: "150px",
+  height: "50px",
+  fontSize:"10px",
+  fontWeight: "bold",
   border: "2.10345px solid #FFFFFF",
-  boxShadow: "0px 4.2069px 4.2069px rgba(255, 102, 71, 0.25)",
-  backgroundColor: "#FF6647",
+  boxShadow: "0px 4.2069px 4.2069px (236, 236, 236, 1)",
+  backgroundColor: "#5a9e6c",
   color: "white"
+};
+const styleCard = {
+  width: "293px",
+  height: "261px",
+  fontFamily: "Alef",
+  left: "50px",
+  top: "114px",
+  backgroundColor: "#FFFFFF",
+  boxShadow: "0px 100px 80px rgba(153, 165, 236, 0.05), 0px 64.8148px 46.8519px rgba(153, 165, 236, 0.037963), 0px 38.5185px 25.4815px rgba(153, 165, 236, 0.0303704), 0px 20px 13px rgba(153, 165, 236, 0.025), 0px 8.14815px 6.51852px rgba(153, 165, 236, 0.0196296), 0px 1.85185px 3.14815px rgba(153, 165, 236, 0.012037)",
+  borderRadius: "25px",
 };
 
 const styleBoxIcon = {
@@ -80,9 +85,9 @@ class Recipe extends Component {
  };
 
   render() {
-    const showingData = this.props.recipeType == 1;
+    const showingData = this.props.recipeType === 1;
     return (
-      <Card className="Card" sx={{ maxWidth: 345 }}>
+      <Card sytle={styleCard} className="Card" sx={{ maxWidth: 300 }}>
         <CardMedia
           component="img"
           height="140"
@@ -133,8 +138,9 @@ class Recipe extends Component {
           onChange={event =>this.repeat= event.target.value } ></TextField> 
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={this.handleClick}>Add to sced</Button>
-          
+          <Fab style={styleFab} size="small" variant="extended">
+          <EventAvailableIcon onClick={this.handleClick}></EventAvailableIcon>
+          Add to schedule</Fab>
           {/* <Button size="small">Learn More</Button> */}
         </CardActions>
         <Dialog

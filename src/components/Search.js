@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
-
+import Logo from "../assets.media/Logo.jpg";
 import { Fab } from '@mui/material';
 import { InputBase } from '@mui/material';
+import { Grid } from '@mui/material';
+import { Box } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
 const styleFab = {
   width: "52px",
   height: "52px",
-  boxShadow: "0px 4.2069px 4.2069px rgba(255, 102, 71, 0.25)",
-  backgroundColor: "#FF6647",
+  boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
+  backgroundColor: "#8fcbd9",
   color: "white",
-  marginTop: "-100px",
-  marginLeft: "475px",
+  marginTop: "35px",
+  marginLeft: "275px",
+  border: "2.10345px solid #FFFFFF",
+};
+const styleImg = {
+  marginLeft: "50%",
+  width:"200px",
+  height:"250",
 };
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
@@ -21,6 +29,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'light' ? '#FFFFFF' : '#FFFFFF',
     fontSize: 15,
     borderRadius: "25px",
+    border: "2.10345px solid #8fcbd9",
     marginLeft: "200px",
     padding: '14px 14px',
     height: "30px",
@@ -32,7 +41,6 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     ]),
     fontFamily: [
       '-apple-system',
-      'Alef',
       'BlinkMacSystemFont',
       '"Segoe UI"',
       'Roboto',
@@ -59,12 +67,16 @@ class SearchComponent extends Component {
   render() {
     return (
       <>
-        <BootstrapInput placeholder="Search by ingredients" sx={{ width: "470px", height: "100px" }} id="NameInput" onChange={event => this.searchTerm = event.target.value} />
-        <div>
+      <Box alignItems="center">
+        <div alignContent="center">
+           <img src={Logo} alt="Logo" style={styleImg}/>
+        </div>
+        <BootstrapInput placeholder="Search by ingredients" sx={{ width: "670px", height: "100px" }} id="NameInput" onChange={event => this.searchTerm = event.target.value} />
           <Fab size="medium" style={styleFab} aria-label="search" onClick={event => this.props.searchRecipe(this.searchTerm)} >
             <SearchIcon />
           </Fab>
-        </div>
+        </Box>
+
       </>
     );
   }

@@ -16,7 +16,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DatePicker';
 import Slider from '@mui/material/Slider';
 import { weekNumber,dayNumber } from 'weeknumber';
-
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 const marks = [
   {
     value: 1,
@@ -46,23 +46,15 @@ const labelStyle = {
   marginTop: "20px"
 };
 
-const styleLogo = {
-  height: "291px",
-  width: "300px",
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: 'center',
-  marginTop: '-85px',
-  marginLeft: "110px"
-
-}
 
 const styleCard = {
-  fontFamily: "Alef",
+  fontFamily: "Arial",
   color: "#77787B",
-  width: "618px",
+  width: "418px",
   height: "752px",
   left: "50px",
   top: "114px",
+  position: "sticky",
   backgroundColor: "#FFFFFF",
   borderRadius: "25px",
 };
@@ -71,8 +63,8 @@ const styleFab = {
   width: "52px",
   height: "52px",
   border: "2.10345px solid #FFFFFF",
-  boxShadow: "0px 4.2069px 4.2069px rgba(255, 102, 71, 0.25)",
-  backgroundColor: "#FF6647",
+  boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
+  backgroundColor: "#8fcbd9",
   color: "white",
   marginTop: "-26px",
   marginLeft: "27px",
@@ -89,7 +81,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create([
     ]),
     fontFamily: [
-      'Alef',
+      'Arial',
     ].join(','),
     '&:focus': {
       boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
@@ -113,7 +105,7 @@ class RecipeForms extends Component {
     this.url=props.url;
     this.addRecipe= this.addRecipe.bind(this);
     this.render = this.render.bind(this);
-    this.updateVacation = this.updateVacation.bind(this);
+    this.updateRecipe = this.updateRecipe.bind(this);
     this.renderUpdate = this.renderUpdate.bind(this);
     this.renderAdd = this.renderAdd.bind(this);
     this.state = {day:this.day, hour:this.hour,week:this.week, date: new Date()};
@@ -138,16 +130,16 @@ class RecipeForms extends Component {
       this.url);
   };
 
-  updateVacation() {
-    this.props.updateVacation({ description: this.description, imgurl: this.imgurl, 
-      name: this.name, ingredients: this.ingredients,url:this.url,id:this.recipeId }, this.vacationId );
+  updateRecipe() {
+    this.props.updateRecipe({ description: this.description, imgurl: this.imgurl, 
+      name: this.name, ingredients: this.ingredients,url:this.url,id:this.recipeId }, this.recipeId );
   }
 
   renderAdd() {
     return (
       <div >
         <Card style={styleCard} >
-          <Typography sx={{ fontFamily: "Alef", marginTop: "20px", marginLeft: "190px", fontSize: "25px", color: "black" }}>Add a new vacation</Typography>
+          <Typography sx={{ fontFamily: "Alef", marginTop: "20px", marginLeft: "190px", fontSize: "25px", color: "black" }}>Add a new Recipe</Typography>
           <FormGroup sx={{ width: "90%", marginLeft: "5%" }} variant="standard">
             <InputLabel style={labelStyle} shrink htmlFor="locationInput" >
               Name
@@ -242,7 +234,7 @@ class RecipeForms extends Component {
     return (
       <div >
         <Card style={styleCard}>
-          <Typography sx={{ fontFamily: "Alef", marginTop: "20px", marginLeft: "220px", fontSize: "25px", color: "black" }}>Update vacation</Typography>
+          <Typography sx={{ fontFamily: "Alef", marginTop: "20px", marginLeft: "220px", fontSize: "25px", color: "black" }}>Update Recipe</Typography>
           <FormGroup sx={{ width: "90%", marginLeft: "5%" }} variant="standard">
             <InputLabel style={labelStyle} shrink htmlFor="locationInput" >
               Name
@@ -283,7 +275,7 @@ class RecipeForms extends Component {
             <CloseIcon />
           </Fab>
           <Fab size="medium" style={styleFab} aria-label="add" onClick={(event) => { 
-            this.updateVacation(event) }} >
+            this.updateRecipe(event) }} >
             <DoneIcon />
           </Fab>
         </Box>

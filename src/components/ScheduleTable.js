@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Typography } from "@mui/material";
 
 const styleCell = {
     width: "50px"
@@ -47,9 +48,14 @@ class ScheduleTable extends Component {
   return (
     this.props.recipes != null ?  
     <TableContainer component={Paper}>
+      <Typography align="center" variant="h3" component="div" gutterBottom>
+      Weekly meal schedule of {this.props.name}
+      </Typography>
       <Table sx={{ width: "900px", margin: "100px" }} aria-label="customized table">
         <TableHead sx={{ width: "900px" }}>
           <TableRow sx={{ width: "900px" }}>
+            
+          <StyledTableCell style={styleCell} align="center"></StyledTableCell>
             <StyledTableCell style={styleCell} align="center">Sunday</StyledTableCell>
             <StyledTableCell style={styleCell} align="center">Monday</StyledTableCell>
             <StyledTableCell style={styleCell} align="center">Tuesday</StyledTableCell>
@@ -89,6 +95,7 @@ class ScheduleTable extends Component {
         </TableBody>
       </Table>
     </TableContainer>:<div>ehh</div>
+   
   );
 }
 }

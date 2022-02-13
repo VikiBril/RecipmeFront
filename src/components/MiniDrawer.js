@@ -17,7 +17,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -116,7 +116,7 @@ export default function MiniDrawer({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Recipe App!
+            RecipMe
           </Typography>
         </Toolbar>
       </AppBar>
@@ -133,37 +133,42 @@ export default function MiniDrawer({ children }) {
         <Divider />
         <List>
           {[
-            { url: "", label: "Home" },
-            { url: "recipes", label: "Weekly Schedule" },
-            { url: "users", label: "My Recipes" },
+            { url: "/RecipesList", label: "Home" },
+            { url: "/Weekly", label: "Weekly Schedule" },
+            { url: "/myRecipes", label: "My Recipes" },
             { url: "users", label: "Users" },
-            { url: "Approval", label: "Approval requests" },
-            { url: "Delete", label: "Delete Recipies" },
-            { url: "BlackList", label: "Blacklist Recipies" },
           ].map((item, index) => {
             const { label, url } = item;
             return (
-              <Link key={`${url}-${index}`} to={`/${url}`}>
+              <NavLink key={`${url}-${index}`} to={`${url}`}>
                 <ListItem button key={label}>
                   <ListItemIcon>
                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                   </ListItemIcon>
                   <ListItemText primary={label} />
                 </ListItem>
-              </Link>
+              </NavLink>
             );
           })}
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          {[
+            { url: "/AdminApproval", label: "Approval requests" },
+            { url: "/Delete", label: "Delete requests" },
+            { url: "/BlackList", label: "Blacklist Recipies" }].map((item,index) => {
+              const { label, url } = item;  
+            return (
+                <NavLink key={`${url}-${index}`} to={`${url}`}>
+                  <ListItem button key={label}>
+                    <ListItemIcon>
+                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </ListItemIcon>
+                    <ListItemText primary={label} />
+                  </ListItem>
+                </NavLink>
+              );
+            })}
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

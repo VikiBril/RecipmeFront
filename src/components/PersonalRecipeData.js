@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import Typography from "@mui/material/Typography";
-import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Fab, FormGroup } from '@mui/material';
-import DoneIcon from '@mui/icons-material/Done';
 const styleFab = {
   width: "35.76px",
   height: "35.76px",
   border: "2.10345px solid #FFFFFF",
-  boxShadow: "0px 4.2069px 4.2069px rgba(255, 102, 71, 0.25)",
-  backgroundColor: "#FF6647",
+  boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
+  backgroundColor: "#8fcbd9",
   color: "white"
 };
 const styleBoxIcon = {
@@ -41,26 +39,26 @@ class PersonalRecipeData extends Component {
   render() {
     return (
       <>
-            <Typography variant="body2" color="text.secondary">
-              {this.props.week}
-            </Typography>
-          
-            <Typography variant="body2" color="text.secondary">
-              {this.props.day}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {this.props.hour}
-            </Typography>
-          <Box style={styleBoxIcon}>
-            <Fab size="medium" style={styleFab} aria-label="edit" >
-              <EditIcon onClick={() => {this.updateCard()}} />
-            </Fab>
-            <Fab size="medium" style={styleFab} aria-label="delete" >
-                  <DeleteIcon onClick={() => {
-                  this.props.deleteVacation(this.props.index)}} />
-            </Fab>
-            </Box> 
-         </>
+        <Typography variant="body2" color="text.secondary">
+          {this.props.week}
+        </Typography>
+      
+        <Typography variant="body2" color="text.secondary">
+          {this.props.day}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {this.props.hour}
+        </Typography>
+      <Box style={styleBoxIcon}>
+        <Fab size="medium" style={styleFab} aria-label="edit" >
+          <EditIcon onClick={() => {this.updateCard()}} />
+        </Fab>
+        <Fab size="medium" style={styleFab} aria-label="delete" >
+              <DeleteIcon onClick={() => {
+              this.props.deleteRecipe(this.props.index)}} />
+        </Fab>
+        </Box> 
+      </>
     );
   }
 }

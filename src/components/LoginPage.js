@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ReactComponent as Logo } from "../assets.media/Logo.jpg";
+import Logo from "../assets.media/Logo.jpg";
 class Login extends Component {
   state = {
     email: "",

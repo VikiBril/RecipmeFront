@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Recipe from "./Recipe";
 import axios from 'axios';
-import { weekNumber } from 'weeknumber'
-import SearchComponent from "./Search"
+import { weekNumber } from 'weeknumber';
+import SearchComponent from "./Search";
+import { Grid } from '@mui/material';
 
 class RecipesList extends Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class RecipesList extends Component {
   }
   
   render() {
-    console.log(this.state.recipes);
     const recipeList = this.state.recipes.map((recipe) => {
       const props = {
         name: `${recipe['recipe']['label']}`,
@@ -32,10 +32,12 @@ class RecipesList extends Component {
       };
       return <Recipe key={props.name} {...props} />;
     });
-    return <div className="grid-list">
+    return      (
+      <Grid alignItems="center">
+
       <SearchComponent searchRecipe={this.searchRecipe}></SearchComponent>
       {recipeList}
-      </div>;
+      </Grid>);
   }
 }
 

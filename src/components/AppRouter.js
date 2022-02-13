@@ -11,23 +11,14 @@ export default function AppRouter() {
   return (
     <>
       <Routes>
-        <Route path="/Login" element={<Login />} />
+        <Route path="/Login" element={<Login/>} />
         <Route path="/myRecipes" element={<PersonalRecipes />} />
         <Route path="/RecipesList" element={<RecipesList />} />
-        <Route path="/Weekly" element={<Weekly />} />
-        <Route path="/Approval" element={<AdminApproval />} />
+        <Route path="/Weekly" element={<Weekly/>} />
+        <Route path="/AdminApproval" element={<AdminApproval />} />
       </Routes>
     </>
   );
 }
 
-// function Search() {
-//   return <h2>searching for recipe..</h2>;
-// }
 
-// function Recipe() {
-//   return <h2>Recipe</h2>;
-// }
-// function Recipes() {
-//   return RecipesList;
-// }
