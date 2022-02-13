@@ -10,19 +10,13 @@ import AdminApproval from "./AdminApproval";
 export default function AppRouter() {
   return (
     <>
-    <Routes>
-      {/* <Route path="/">
-        <Login />
-      </Route> */}
-      {/* <Route path="/Search">
-        <Search />
-      </Route> */}
-      <Route path="/myRecipes" element={<PersonalRecipes/>}/>
-      <Route path="/RecipesList" element={<RecipesList/>}/>
-      <Route path="/Weekly" element={<Weekly/>}/>
-      <Route path="/Approval" element={<AdminApproval/>}/>
-      
-    </Routes>
+      <Routes>
+        <Route path="/Login" element={<Login />} />
+        <Route path="/myRecipes" element={<PersonalRecipes />} />
+        <Route path="/RecipesList" element={<RecipesList />} />
+        <Route path="/Weekly" element={<Weekly />} />
+        <Route path="/Approval" element={<AdminApproval />} />
+      </Routes>
     </>
   );
 }
