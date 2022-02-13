@@ -59,7 +59,7 @@ class SearchComponent extends Component {
   render() {
     return (
       <>
-        <BootstrapInput placeholder="Search by name or location" sx={{ width: "470px", height: "100px" }} id="NameInput" onChange={event => this.searchTerm = event.target.value} />
+        <BootstrapInput placeholder="Search by ingredients" sx={{ width: "470px", height: "100px" }} id="NameInput" onChange={event => this.searchTerm = event.target.value} />
         <div>
           <Fab size="medium" style={styleFab} aria-label="search" onClick={event => this.props.searchRecipe(this.searchTerm)} >
             <SearchIcon />

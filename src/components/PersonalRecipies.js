@@ -2,19 +2,94 @@ import React, { Component } from "react";
 import Recipe from "./Recipe";
 import axios from 'axios';
 import { weekNumber } from 'weeknumber';
+import { Grid } from '@mui/material';
+import RecipeForms from "./RecipeForms";
+
 class PersonalRecipes extends Component {
 
     constructor(props) {
         super(props);
         const week = weekNumber(new Date());
-        this.url = "http://localhost:3001";
-        this.state = {recipes: [], week:week};
+        this.serverUrl = "http://localhost:3001";
+        this.state = {recipes: [],
+                      week:week,          
+                      showAddForm: true,
+                      recipeData:{},
+                      vacationUpdateIndex: 0};
         this.loadRecipies = this.loadRecipies.bind(this);
+
+        this.borderCallback = null;
+        this.render = this.render.bind(this);
+        this.add = this.add.bind(this);
+        this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
+        this.displayAddForm = this.displayAddForm.bind(this);
+        this.showUpdateForm = this.showUpdateForm.bind(this);
+      }
+
+      add( name ,
+          description , 
+          imgurl, 
+          day,
+          week,
+          hour,
+          ingredients,
+          repeat,
+          url) {
+            const postBody = {"day":this.state.day,
+            "url": url,
+            "imgUrl":imgurl,
+            "recipeName":name,
+            "user":"michal@gmail.com",
+            "week": week,
+            "repeat": repeat,
+            "hour": hour,
+            "day": day,
+            "recipeType": 1,
+            "ingredients": ingredients,
+            "description":description}
+            console.log(postBody);
+            axios.post(`${this.serverUrl}/recipe`,postBody)
+            .then((recipes) =>{
+              console.log("recipe added=]");
+            }).catch((err)=>console.log(err));
+      }
+
+      delete(id) {
+        this.vacationsDataList = this.vacationsDataList.filter(vacation => vacation.id !== id)
+        this.displayAddForm();
+      }
+    
+      update(recipeData, id) {
+        const postBody = {"id": recipeData['id'],
+        "url": recipeData['url'],
+        "imgurl":recipeData['imgurl'],
+        "user":"michal@gmail.com",
+        "recipeType": 1,
+        "ingredients": recipeData['ingredients'],
+        "name": recipeData['name'],
+        "description":recipeData['description']}
+        console.log(postBody);
+        axios.put(`${this.serverUrl}/recipe`,postBody)
+        .then((recipes) =>{
+          console.log("recipe updated=]");
+          this.setState({ showAddForm: true });
+        }).catch((err)=>console.log(err));
+      }
+    
+      displayAddForm() {
+        this.setState({ showAddForm: true });
+      }
+    
+      showUpdateForm(recipeData, borderCallback) {
+        this.setState({ showAddForm: false, recipeData: recipeData });
+        this.forceUpdate();
+        this.borderCallback =  borderCallback;
       }
 
       loadRecipies() {
         console.log(this.state.week);
-        axios.get(`${this.url}/recipe?user=michal@gmail.com&week=${this.state.week}`)
+        axios.get(`${this.serverUrl}/recipe?user=michal@gmail.com&week=${this.state.week}`)
             .then((recipes) =>{
             this.setState({ recipes: recipes.data });
             }).catch((err)=>console.log(err));
@@ -28,6 +103,7 @@ class PersonalRecipes extends Component {
         console.log(this.state.recipes);
         const recipeList = this.state.recipes.map((recipe) => {
           const props = {
+            _id: `${recipe['_id']}`,
             name: `${recipe['recipeName']}`,
             description: `${recipe['description']}`,
             imgurl: `${recipe['image']}`,
@@ -39,11 +115,29 @@ class PersonalRecipes extends Component {
             url: `${recipe['url']}`,
             recipeType: `${recipe['recipeType']}`,
           };
-          return <Recipe key={props.name} {...props} />;
+          return <Recipe key={props.name} {...props} updateForm={this.showUpdateForm} deleteRecipe={this.delete} />;
         });
-        return <div className="grid-list">
+        return (<>
+        <Grid container >
+        <Grid item container  rowSpacing={1} sx={{ maxWidth: "300px", marginLeft: "20px" }} xs={6}>
           {recipeList}
-          </div>;
+        </Grid>
+        <Grid item sx={{ marginLeft: "40px" }}>
+          <RecipeForms key={this.state.recipeData['url']} name={this.state.recipeData['name']}
+            description={this.state.recipeData['description']}
+            imgurl={this.state.recipeData['imgurl']}
+            day={this.state.recipeData['day']}
+            week= {this.state.recipeData['week']}
+            hour= {this.state.recipeData['hour']}
+            url= {this.state.recipeData['url']}
+            recipeId={this.state.recipeData['_id']}
+              updateVacation={this.update} disableForm={this.displayAddForm}
+              addRecipe={this.add}
+              showAddForm={this.state.showAddForm} />
+          
+        </Grid>
+      </Grid>
+      </>);
       }
 }
 export default PersonalRecipes;

@@ -1,30 +1,26 @@
 import React from "react";
-import { Router, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Login from "./LoginPage";
 import Weekly from "./WeeklySched";
 import Recipe from "./Recipe";
 //import Search from "./Search";
 import RecipesList from "./RecipesList";
-
+import PersonalRecipes from "./PersonalRecipies";
 export default function AppRouter() {
   return (
-    <Router>
+    <>
+    <Routes>
+      {/* <Route path="/">
+        <Login />
+      </Route> */}
       {/* <Route path="/Search">
         <Search />
       </Route> */}
-      <Route path="/recipes/:recipeId">
-        <Recipe />
-      </Route>
-      <Route path="/recipes">
-        <RecipesList />
-      </Route>
-      <Route path="/weeklysched">
-        <Weekly />
-      </Route>
-      <Route path="/">
-        <Login />
-      </Route>
-    </Router>
+      <Route path="/myRecipes" element={<PersonalRecipes/>}/>
+      <Route path="/RecipesList" element={<RecipesList/>}/>
+      <Route path="/Weekly" element={<Weekly/>}/>
+    </Routes>
+    </>
   );
 }
 

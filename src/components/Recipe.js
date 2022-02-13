@@ -17,11 +17,27 @@ import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+import { Fab } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import DialogTitle from '@mui/material/DialogTitle';
 import { weekNumber } from 'weeknumber';
 import PersonalRecipeData from './PersonalRecipeData';
+
+const styleFab = {
+  width: "35.76px",
+  height: "35.76px",
+  border: "2.10345px solid #FFFFFF",
+  boxShadow: "0px 4.2069px 4.2069px rgba(255, 102, 71, 0.25)",
+  backgroundColor: "#FF6647",
+  color: "white"
+};
+
+const styleBoxIcon = {
+  marginLeft: "200px",
+  marginTop: "-19px",
+};
+
 class Recipe extends Component {
 
   constructor(props) {
@@ -33,7 +49,6 @@ class Recipe extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOpen = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.renderPersonalRecipeData = this.handleClose.bind(this);
   }
 
   handleClickOpen(){
@@ -64,25 +79,8 @@ class Recipe extends Component {
     }).catch((err)=>console.log(err));
  };
 
-  renderPersonalRecipeData() {
-    if (this.props.recipeType == 1) {
-    return (<>
-            <Typography variant="body2" color="text.secondary">
-              {this.props.week}
-            </Typography>
-          
-            <Typography variant="body2" color="text.secondary">
-              {this.props.day}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {this.props.hour}
-            </Typography>
-          </>);}
-    return ({});
-  }
-
   render() {
-    const a = this.props.recipeType == 1;
+    const showingData = this.props.recipeType == 1;
     return (
       <Card className="Card" sx={{ maxWidth: 345 }}>
         <CardMedia
@@ -99,7 +97,7 @@ class Recipe extends Component {
           <Typography variant="body2" color="text.secondary">
             {this.props.description}
           </Typography>
-           {a? <PersonalRecipeData {...this.props}> </PersonalRecipeData>:null}
+           {showingData? <PersonalRecipeData {...this.props}> </PersonalRecipeData>:null}
            <InputLabel id="demo-simple-select-label">Day</InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -126,37 +124,17 @@ class Recipe extends Component {
             label="Set Hour"
             onChange={event =>this.setState({ hour: event.target.value }) }
             >
-            <MenuItem value={0}>00:00</MenuItem>
-            <MenuItem value={1}>01:00</MenuItem>
-            <MenuItem value={2}>02:00</MenuItem>
-            <MenuItem value={3}>03:00</MenuItem>
-            <MenuItem value={4}>04:00</MenuItem>
-            <MenuItem value={5}>05:00</MenuItem>
-            <MenuItem value={6}>06:00</MenuItem>
-            <MenuItem value={0}>07:00</MenuItem>
-            <MenuItem value={1}>08:00</MenuItem>
-            <MenuItem value={2}>09:00</MenuItem>
-            <MenuItem value={3}>10:00</MenuItem>
-            <MenuItem value={4}>11:00</MenuItem>
-            <MenuItem value={5}>12:00</MenuItem>
-            <MenuItem value={6}>13:00</MenuItem>
-            <MenuItem value={3}>14:00</MenuItem>
-            <MenuItem value={4}>15:00</MenuItem>
-            <MenuItem value={5}>16:00</MenuItem>
-            <MenuItem value={6}>17:00</MenuItem>
-            <MenuItem value={5}>18:00</MenuItem>
-            <MenuItem value={6}>19:00</MenuItem>
-            <MenuItem value={3}>20:00</MenuItem>
-            <MenuItem value={4}>21:00</MenuItem>
-            <MenuItem value={5}>22:00</MenuItem>
-            <MenuItem value={6}>23:00</MenuItem>
+            <MenuItem value={1}>Breakfast</MenuItem>
+            <MenuItem value={2}>Lunch</MenuItem>
+            <MenuItem value={3}>Dinner</MenuItem>
+
           </Select>           
           <TextField id="outlined-basic" label="repeat" variant="standard"  
           onChange={event =>this.repeat= event.target.value } ></TextField> 
-
         </CardContent>
         <CardActions>
           <Button size="small" onClick={this.handleClick}>Add to sced</Button>
+          
           {/* <Button size="small">Learn More</Button> */}
         </CardActions>
         <Dialog

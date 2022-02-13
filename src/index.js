@@ -4,21 +4,20 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StyledEngineProvider } from "@mui/material/styles";
 import MiniDrawer from "./components/MiniDrawer";
-//import AppRouter from "./AppRouter";
-import { BrowserRouter as Router } from "react-router-dom";
+import AppRouter from "./components/AppRouter";
+import { BrowserRouter  } from "react-router-dom";
 import "./index.css";
-
 
 
 ReactDOM.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-      <App />
-      <Router>
+      {/* <App /> */}
+      <BrowserRouter>
         <MiniDrawer>
-          {/* <AppRouter /> */}
+          <AppRouter />
         </MiniDrawer>
-      </Router>
+      </BrowserRouter>
     </StyledEngineProvider>
   </React.StrictMode>,
   document.getElementById("root")
