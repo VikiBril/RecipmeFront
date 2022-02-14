@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
+import Icon from "@mui/material/Icon";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -18,6 +19,10 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { NavLink } from "react-router-dom";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import HomeIcon from "@mui/icons-material/Home";
 
 const drawerWidth = 240;
 
@@ -98,11 +103,24 @@ export default function MiniDrawer({ children }) {
     setOpen(false);
   };
 
+  function listOfIcons() {
+    return [
+      { url: "/RecipesList", label: "Home", icon: HomeIcon },
+      { url: "/Weekly", label: "Weekly Schedule", icon: DateRangeIcon },
+      { url: "/myRecipes", label: "My Recipes", icon: MenuBookIcon },
+      { url: "users", label: "Users", icon: AccountBoxIcon },
+    ];
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} style={{backgroundColor:"#8fcbd9"}}>
-        <Toolbar >
+      <AppBar
+        position="fixed"
+        open={open}
+        style={{ backgroundColor: "#8fcbd9" }}
+      >
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -132,11 +150,24 @@ export default function MiniDrawer({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
+          {listOfIcons().map((item, index) => {
+            const { label, url, icon: Icon } = item;
+            return (
+              <NavLink key={`${url}-${index}`} to={`${url}`}>
+                <ListItem button key={label}>
+                  <Icon></Icon>
+                  <ListItemText primary={label} />
+                </ListItem>
+              </NavLink>
+            );
+          })}
+        </List>
+        <Divider />
+        {/* <List>
           {[
-            { url: "/RecipesList", label: "Home" },
-            { url: "/Weekly", label: "Weekly Schedule" },
-            { url: "/myRecipes", label: "My Recipes" },
-            { url: "users", label: "Users" },
+            { url: "/AdminApproval", label: "Approval requests" },
+            { url: "/Delete", label: "Delete requests" },
+            { url: "/BlackList", label: "Blacklist Recipies" },
           ].map((item, index) => {
             const { label, url } = item;
             return (
@@ -150,26 +181,7 @@ export default function MiniDrawer({ children }) {
               </NavLink>
             );
           })}
-        </List>
-        <Divider />
-        <List>
-          {[
-            { url: "/AdminApproval", label: "Approval requests" },
-            { url: "/Delete", label: "Delete requests" },
-            { url: "/BlackList", label: "Blacklist Recipies" }].map((item,index) => {
-              const { label, url } = item;  
-            return (
-                <NavLink key={`${url}-${index}`} to={`${url}`}>
-                  <ListItem button key={label}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={label} />
-                  </ListItem>
-                </NavLink>
-              );
-            })}
-        </List>
+        </List> */}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
