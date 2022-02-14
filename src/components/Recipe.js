@@ -46,7 +46,6 @@ const styleBoxIcon = {
 class Recipe extends Component {
 
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {day:1, hour:1,open:false};
     this.repeat = 1;

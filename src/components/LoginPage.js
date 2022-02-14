@@ -1,42 +1,64 @@
 import React, { Component } from "react";
 import Logo from "../assets.media/Logo.jpg";
+import axios from 'axios';
+import { Grid, Paper, TextField, Button } from '@material-ui/core'
+
+const paperStyle = {
+  padding: 20,
+  height: '78vh',
+  width: 300,
+  margin: "20px auto"
+};
+const btnstyle = {
+  margin: '8px 0',
+  marginTop: '40px'
+};
+
+const styleImg = {
+  marginLeft: "24%",
+  width: "150px",
+  height: "120px",
+};
 class Login extends Component {
-  state = {
-    email: "",
-    pwd: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      userId: "",
+      password: ""
+    };
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+
+  handleChange = (event) => {
+    this.setState({ [event.target.userId]: event.target.value });
   };
 
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+
+  handleSubmit = (event) => {
+    const url = "http://localhost:3001";
+    const userData = {
+      userId: this.state.userId,
+      password: this.state.password
+    };
+    axios.get(`${url}/Login`)
+      .then(() => {
+        this.setState({ userId: this.props.userId, password: this.props.password });
+      }).catch((err) => console.log(err));
   };
-  handleSubmit = (e) => {};
   render() {
     return (
-      <div>
-        <div>
-          <Logo />
-        </div>
-        <div>
-          <form>
-            <input
-              type="email"
-              name="email"
-              placeholder="You're email is.."
-              required
-              onChange={this.handleChange}
-            />
-            <input
-              type="password"
-              name="pwd"
-              placeholder="Password.."
-              required
-              onChange={this.handleChange}
-            />
-            <button onSubmit={this.handleSubmit}>Log in</button>
-          </form>
-        </div>
-      </div>
+      <Grid>
+        <Paper elevation={10} style={paperStyle}>
+          <Grid align='center'></Grid>
+          <img src={Logo} alt="Logo" style={styleImg} />
+          <h2>Sign In</h2>
+          <TextField label='Username' placeholder='Enter Email' fullWidth required />
+          <TextField label='Password' placeholder='Enter password' type='password' fullWidth required />
+          <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth onSubmit={this.onSubmit}>Sign in</Button>
+        </Paper >
+      </Grid >
     );
   }
 }
