@@ -11,12 +11,11 @@ class WeeklySched extends Component {
         this.state = {recipes: null};
         this.url = "http://localhost:3001";
         this.rows = [
-            this.createData('Breakfast','Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt', 'Frozen yoghurt', 'Frozen yoghurt', 24, 4.0),
+            this.createData('Breakfast','Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt', 'Frozen yoghurt', 24, 4.0),
             this.createData('Lunch','Ice cream sandwich', 237, 9.0, 37, 4.3),
             this.createData('Dinner','Eclair', 262, 16.0, 24, 6.0),
             ];
         this.getRecipies = this.getRecipies.bind(this);
-
         }
 
     componentDidMount(){

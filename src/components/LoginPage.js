@@ -42,7 +42,7 @@ class Login extends Component {
       userId: this.state.userId,
       password: this.state.password
     };
-    axios.get(`${url}/Login`)
+    axios.get(`${url}/user/login/?userId=${this.state.userId}&${this.state.password}`)
       .then(() => {
         this.setState({ userId: this.props.userId, password: this.props.password });
       }).catch((err) => console.log(err));

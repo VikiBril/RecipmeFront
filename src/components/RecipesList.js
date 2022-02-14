@@ -34,7 +34,6 @@ class RecipesList extends Component {
     });
     return      (
       <Grid alignItems="center">
-
       <SearchComponent searchRecipe={this.searchRecipe}></SearchComponent>
       {recipeList}
       </Grid>);

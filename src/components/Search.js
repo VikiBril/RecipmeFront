@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Logo from "../assets.media/Logo.jpg";
 import { Fab } from '@mui/material';
 import { InputBase } from '@mui/material';
-import { Grid } from '@mui/material';
 import { Box } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
