@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { InputBase, Card } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
-import { Fab, FormGroup } from '@mui/material';
+import { Fab, FormGroup,Grid } from '@mui/material';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import DoneIcon from '@mui/icons-material/Done';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,7 +15,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DesktopDatePicker from '@mui/lab/DatePicker';
 import Slider from '@mui/material/Slider';
-import { weekNumber,dayNumber } from 'weeknumber';
+import { weekNumber, dayNumber } from 'weeknumber';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 const marks = [
   {
@@ -66,16 +66,16 @@ const styleFab = {
   boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
   backgroundColor: "#8fcbd9",
   color: "white",
-  marginTop: "-26px",
-  marginLeft: "27px",
+  marginTop: "-10%",
 };
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   '& .MuiInputBase-input': {
     borderRadius: 4,
     position: 'relative',
-    backgroundColor: theme.palette.mode === 'light' ? '#F6F7FB' : '#F6F7FB',
+    backgroundColor: theme.palette.mode === 'light' ? 'white' : 'white',
     fontSize: 15,
+    border:'1px',
     padding: '10px 12px',
     height: "10px",
     transition: theme.transitions.create([
@@ -99,16 +99,16 @@ class RecipeForms extends Component {
     this.description = props.description;
     this.day = props.day;
     this.week = props.week;
-    this.hour= props.hour;
-    this.ingredients=props.ingredients;
-    this.repeat=1;
-    this.url=props.url;
-    this.addRecipe= this.addRecipe.bind(this);
+    this.hour = props.hour;
+    this.ingredients = props.ingredients;
+    this.repeat = 1;
+    this.url = props.url;
+    this.addRecipe = this.addRecipe.bind(this);
     this.render = this.render.bind(this);
     this.updateRecipe = this.updateRecipe.bind(this);
     this.renderUpdate = this.renderUpdate.bind(this);
     this.renderAdd = this.renderAdd.bind(this);
-    this.state = {day:this.day, hour:this.hour,week:this.week, date: new Date()};
+    this.state = { day: this.day, hour: this.hour, week: this.week, date: new Date() };
 
   }
   valueLabelFormat(value) {
@@ -119,10 +119,10 @@ class RecipeForms extends Component {
   }
   addRecipe(e) {
     console.log(this.ingredients);
-    this.props.addRecipe( this.name ,
-      this.description , 
-      this.imgurl, 
-      this.state.date.getDay()+1,
+    this.props.addRecipe(this.name,
+      this.description,
+      this.imgurl,
+      this.state.date.getDay() + 1,
       weekNumber(this.state.date),
       this.state.hour,
       this.ingredients,
@@ -131,96 +131,98 @@ class RecipeForms extends Component {
   };
 
   updateRecipe() {
-    this.props.updateRecipe({ description: this.description, imgurl: this.imgurl, 
-      name: this.name, ingredients: this.ingredients,url:this.url,id:this.recipeId }, this.recipeId );
+    this.props.updateRecipe({
+      description: this.description, imgurl: this.imgurl,
+      name: this.name, ingredients: this.ingredients, url: this.url, id: this.recipeId
+    }, this.recipeId);
   }
 
   renderAdd() {
     return (
       <div >
         <Card style={styleCard} >
-          <Typography sx={{ fontFamily: "Alef", marginTop: "20px", marginLeft: "190px", fontSize: "25px", color: "black" }}>Add a new Recipe</Typography>
-          <FormGroup sx={{ width: "90%", marginLeft: "5%" }} variant="standard">
-            <InputLabel style={labelStyle} shrink htmlFor="locationInput" >
-              Name
-            </InputLabel>
-            <BootstrapInput placeholder="Name" sx={{ width: "100%" }} id="NameInput" onChange={event => this.name = event.target.value} />
-          
+          <Grid container >
+            <Typography sx={{ marginLeft: "25%",marginTop: "20px", fontSize: "25px", color: "black",justifyContent:"center" }}>Add a new Recipe</Typography>
+            <FormGroup sx={{ width: "90%", marginLeft: "5%" }} variant="standard">
+              <InputLabel style={labelStyle} shrink htmlFor="locationInput">
+                Name
+              </InputLabel>
+              <BootstrapInput placeholder="Name" sx={{ width: "100%" }} id="NameInput" onChange={event => this.name = event.target.value} />
 
-            <InputLabel style={labelStyle} shrink htmlFor="locationInput">
-              Time
-            </InputLabel>
-            <Select labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              value={this.state.hour}
-              label="Time"
-              onChange={event =>this.setState({ hour: event.target.value }) }
-            >
-            <MenuItem value={1}>Breakfast</MenuItem>
-            <MenuItem value={2}>Lunch</MenuItem>
-            <MenuItem value={3}>Dinner</MenuItem>
-        </Select>
 
-        <InputLabel style={labelStyle} shrink htmlFor="locationInput">
-              Date
-            </InputLabel>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DesktopDatePicker
-            label="Custom date"
-            value={this.state.date}
-            onChange={(newValue) => {
-              this.setState({date: newValue});
-        }}
-        renderInput={({ inputRef, inputProps, InputProps }) => (
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <input ref={inputRef} {...inputProps} />
-            {InputProps?.endAdornment}
-          </Box>
-        )}
-          />
-        </LocalizationProvider>
-    
-        <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
-          Ingredients
-        </InputLabel>
-        <BootstrapInput placeholder="Ingredients" fullWidth id="ingredientsInput" onChange={event => this.ingredients = event.target.value} />
-        
-        <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
-          Description
-        </InputLabel>
-        <TextareaAutosize
-            maxRows={4}
-            aria-label="maximum height"
-            placeholder="Maximum 4 rows"
-            defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua."
-            style={{ width: 500 }}
-            onChange={event => this.description = event.target.value}/>
-   <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
-          For how many days ? 
-        </InputLabel>
-        <Slider
-          aria-label="Restricted values"
-          defaultValue={1}
-          valueLabelFormat={this.valueLabelFormat}
-          getAriaValueText={this.valuetext}
-          step={null}
-          valueLabelDisplay="auto"
-          marks={marks}
-          min={1}
-          max={5}
-          onChange={event => this.repeat = event.target.value}/>
+              <InputLabel style={labelStyle} shrink htmlFor="locationInput">
+                Time
+              </InputLabel>
+              <Select labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                sx={{ width: 100, height: 30, fontSize: "12px" }}
+                value={this.state.hour}
+                label="Time"
+                onChange={event => this.setState({ hour: event.target.value })}
+              >
+                <MenuItem value={1}>Breakfast</MenuItem>
+                <MenuItem value={2}>Lunch</MenuItem>
+                <MenuItem value={3}>Dinner</MenuItem>
+              </Select>
 
-            <InputLabel style={labelStyle} shrink htmlFor="imageInput">
-              Image url
-            </InputLabel>
-            <BootstrapInput placeholder="Image Url" fullWidth id="imageInput" onChange={event => this.imgurl = event.target.value} />
-            
-            <InputLabel style={labelStyle} shrink htmlFor="recipeUrl">
-              Url
-            </InputLabel>
-            <BootstrapInput placeholder="Url" fullWidth id="recipeUrl" onChange={event => this.url = event.target.value} />
-          </FormGroup>
+              <InputLabel style={labelStyle} shrink htmlFor="locationInput">
+                Date
+              </InputLabel>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DesktopDatePicker
+                  label="Custom date"
+                  value={this.state.date}
+                  onChange={(newValue) => {
+                    this.setState({ date: newValue });
+                  }}
+                  renderInput={({ inputRef, inputProps, InputProps }) => (
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <input ref={inputRef} {...inputProps} />
+                      {InputProps?.endAdornment}
+                    </Box>
+                  )}
+                />
+              </LocalizationProvider>
+
+              <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
+                Ingredients
+              </InputLabel>
+              <BootstrapInput placeholder="Ingredients" fullWidth id="ingredientsInput" onChange={event => this.ingredients = event.target.value} />
+
+              <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
+                Description
+              </InputLabel>
+              <TextareaAutosize
+                maxRows={4}
+                aria-label="maximum height"
+                placeholder="Add detiled description"
+                onChange={event => this.description = event.target.value} />
+              <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
+                For how many days ?
+              </InputLabel>
+              <Slider
+                aria-label="Restricted values"
+                defaultValue={1}
+                valueLabelFormat={this.valueLabelFormat}
+                getAriaValueText={this.valuetext}
+                step={null}
+                valueLabelDisplay="auto"
+                marks={marks}
+                min={1}
+                max={5}
+                onChange={event => this.repeat = event.target.value} />
+
+              <InputLabel style={labelStyle} shrink htmlFor="imageInput">
+                Image url
+              </InputLabel>
+              <BootstrapInput placeholder="Image Url" fullWidth id="imageInput" onChange={event => this.imgurl = event.target.value} />
+
+              <InputLabel style={labelStyle} shrink htmlFor="recipeUrl">
+                Url
+              </InputLabel>
+              <BootstrapInput placeholder="Url" fullWidth id="recipeUrl" onChange={event => this.url = event.target.value} />
+            </FormGroup>
+          </Grid>
         </Card>
         <Fab size="medium" style={styleFab} aria-label="add" >
           <AddIcon onClick={(event) => this.addRecipe(event)} />
@@ -240,28 +242,28 @@ class RecipeForms extends Component {
               Name
             </InputLabel>
             <BootstrapInput defaultValue={this.name} placeholder="Name" sx={{ width: "100%" }} id="NameInput" onChange={event => this.name = event.target.value} />
-    
-        <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
-          Ingredients
-        </InputLabel>
-        <BootstrapInput placeholder="Ingredients" defaultValue={this.ingredients} fullWidth id="ingredientsInput" onChange={event => this.ingredients = event.target.value} />
-        
-        <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
-          Description
-        </InputLabel>
-        <TextareaAutosize
-            maxRows={4}
-            aria-label="maximum height"
-            placeholder="Maximum 4 rows"
-            defaultValue={this.description}
-            style={{ width: 500 }}
-            onChange={event => this.description = event.target.value}/>
+
+            <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
+              Ingredients
+            </InputLabel>
+            <BootstrapInput placeholder="Ingredients" defaultValue={this.ingredients} fullWidth id="ingredientsInput" onChange={event => this.ingredients = event.target.value} />
+
+            <InputLabel style={labelStyle} shrink htmlFor="ingredientsInput">
+              Description
+            </InputLabel>
+            <TextareaAutosize
+              maxRows={4}
+              aria-label="maximum height"
+              placeholder="Maximum 4 rows"
+              defaultValue={this.description}
+              style={{ width: 500 }}
+              onChange={event => this.description = event.target.value} />
 
             <InputLabel style={labelStyle} shrink htmlFor="imageInput">
               Image url
             </InputLabel>
             <BootstrapInput defaultValue={this.imgurl} placeholder="Image Url" fullWidth id="imageInput" onChange={event => this.imgurl = event.target.value} />
-            
+
             <InputLabel style={labelStyle} shrink htmlFor="recipeUrl">
               Url
             </InputLabel>
@@ -274,8 +276,9 @@ class RecipeForms extends Component {
           }}>
             <CloseIcon />
           </Fab>
-          <Fab size="medium" style={styleFab} aria-label="add" onClick={(event) => { 
-            this.updateRecipe(event) }} >
+          <Fab size="medium" margin="25%"style={styleFab} aria-label="add" onClick={(event) => {
+            this.updateRecipe(event)
+          }} >
             <DoneIcon />
           </Fab>
         </Box>
@@ -283,8 +286,8 @@ class RecipeForms extends Component {
     );
   }
   render() {
-    
-    return (<>{this.props.showAddForm? this.renderAdd():this.renderUpdate()}</>)
+
+    return (<>{this.props.showAddForm ? this.renderAdd() : this.renderUpdate()}</>)
   }
 
 }
