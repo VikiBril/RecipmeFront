@@ -121,18 +121,18 @@ class PersonalRecipes extends Component {
         url: `${recipe['url']}`,
         recipeType: `${recipe['recipeType']}`,
       };
-      return <Grid item xs={12} md={4} sm={3}>
+      return <Grid item xs={12} md={6} sm={12}>
       <Recipe key={props.name} {...props} 
       updateForm={this.showUpdateForm} deleteRecipe={this.delete} />
       </Grid>;
     });
     return (
-    <>
-
-      <Grid container>
+      <Grid container >
+        <Grid container xs={12} sm={6} md={6} >
           {recipeList}
-        <Grid item xs={6} md={4} sm={3}>
-          <RecipeForms key={this.state.recipeData['url']} name={this.state.recipeData['name']}
+          </Grid>
+        <Grid item alignItems="center" xs={6} md={6} sm={4}>
+          <RecipeForms  key={this.state.recipeData['url']} name={this.state.recipeData['name']}
             description={this.state.recipeData['description']}
             imgurl={this.state.recipeData['imgurl']}
             day={this.state.recipeData['day']}
@@ -143,10 +143,9 @@ class PersonalRecipes extends Component {
             updateRecipe={this.update} disableForm={this.displayAddForm}
             addRecipe={this.add}
             showAddForm={this.state.showAddForm} />
-
         </Grid>
       </Grid>
-    </>);
+  );
   }
 }
 export default PersonalRecipes;

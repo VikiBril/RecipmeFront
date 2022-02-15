@@ -17,6 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { weekNumber } from 'weeknumber';
 import PersonalRecipeData from './PersonalRecipeData';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+
 const styleFab = {
   height: "40px",
   flex: 1,
@@ -32,7 +33,7 @@ const styleCard = {
   width: "150px" ,
   alignItems: 'center',
   fontFamily: "Arial",
-  left: "50px",
+  left: "10px",
   top: "114px",
   backgroundColor: "#FFFFFF",
   boxShadow: "0px 100px 80px rgba(153, 165, 236, 0.05), 0px 64.8148px 46.8519px rgba(153, 165, 236, 0.037963), 0px 38.5185px 25.4815px rgba(153, 165, 236, 0.0303704), 0px 20px 13px rgba(153, 165, 236, 0.025), 0px 8.14815px 6.51852px rgba(153, 165, 236, 0.0196296), 0px 1.85185px 3.14815px rgba(153, 165, 236, 0.012037)",
@@ -75,7 +76,7 @@ class Recipe extends Component {
       "week": week,
       "repeat": this.repeat,
       "hour": this.state.hour,
-      "recipeType": 0,
+      "recipeType": this.props.recipeType,
       "ingredients": this.props.ingredients,
       "description": "put rise in hot water, wait for 15 minutes"
     }
@@ -86,10 +87,11 @@ class Recipe extends Component {
   };
 
   render() {
-    const showingData = this.props.recipeType === 1;
+    const showingData = this.props.recipeType == 1;
     return (
       <Grid contuner item >
-      <Card sytle={styleCard} className="Card" sx={{height: "500px",maxWidth: "270px",borderRadius: "30px"}}>
+      <Card sytle={styleCard} className="Card" spasing={2} sx={{height: "500px",minWidth: "270px",maxWidth: "270px",borderRadius: "30px"}}>
+        <CardActions>
         <CardMedia sx={{ maxHeight: "150px" }}
           component="img"
           height="130"
@@ -98,6 +100,7 @@ class Recipe extends Component {
           alt="image of recipe"
           title="image of recipe"
         />
+        </CardActions> 
         <CardContent >
           <Typography gutterBottom variant="h5" component="div">
             {this.props.name}
@@ -153,8 +156,8 @@ class Recipe extends Component {
         </CardContent>
         <Grid contuiner>
         <CardActions>
-          <Fab style={styleFab} size="small" variant="extended">
-            <EventAvailableIcon onClick={this.handleClick}></EventAvailableIcon>
+          <Fab style={styleFab} onClick={this.handleClick} size="small" variant="extended">
+            <EventAvailableIcon ></EventAvailableIcon>
             Add to schedule</Fab>
         </CardActions>
         <Dialog

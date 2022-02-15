@@ -30,6 +30,7 @@ class RecipesList extends Component {
         name: `${recipe['recipe']['label']}`,
         description: `${recipe['recipe']['ingredientLines']}`,
         imgurl: `${recipe['recipe']['images']['REGULAR']['url']}`,
+        recipeType:0
       };
       return <Grid item xs={12} md={4} sm={3}><Recipe key={props.name} {...props} /></Grid>;
     });

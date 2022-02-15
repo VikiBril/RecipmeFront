@@ -108,7 +108,7 @@ export default function MiniDrawer({ children }) {
       { url: "/RecipesList", label: "Home", icon: HomeIcon },
       { url: "/Weekly", label: "Weekly Schedule", icon: DateRangeIcon },
       { url: "/myRecipes", label: "My Recipes", icon: MenuBookIcon },
-      { url: "users", label: "Users", icon: AccountBoxIcon },
+      { url: "/UsersRecipes", label: "Users", icon: AccountBoxIcon },
     ];
   }
 

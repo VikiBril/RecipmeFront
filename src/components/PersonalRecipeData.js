@@ -39,23 +39,13 @@ class PersonalRecipeData extends Component {
   render() {
     return (
       <>
-        <Typography variant="body2" color="text.secondary">
-          {this.props.week}
-        </Typography>
-      
-        <Typography variant="body2" color="text.secondary">
-          {this.props.day}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {this.props.hour}
-        </Typography>
       <Box style={styleBoxIcon}>
         <Fab size="medium" style={styleFab} aria-label="edit" >
           <EditIcon onClick={() => {this.updateCard()}} />
         </Fab>
         <Fab size="medium" style={styleFab} aria-label="delete" >
               <DeleteIcon onClick={() => {
-              this.props.deleteRecipe(this.props.index)}} />
+              this.props.deleteRecipe(this.props.recipeId)}} />
         </Fab>
         </Box> 
       </>
