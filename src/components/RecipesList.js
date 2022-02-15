@@ -16,7 +16,7 @@ class RecipesList extends Component {
   }
 
   searchRecipe(ingredients) {
-    const url = "http://localhost:3001";
+    const url = "http://localhost:8080";
     axios.get(`${url}/recipe/ingredients?ingredients=${ingredients}`)
       .then((recipes) => {
         this.setState({ recipes: recipes.data });

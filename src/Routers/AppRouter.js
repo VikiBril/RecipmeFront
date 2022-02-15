@@ -10,15 +10,14 @@ export default function AppRouter() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Login/>} />
-        <Route path="/myRecipes" element={<PersonalRecipes />} />
+        <Route path="/" element={<Login />} />
+        <Route exact path="/myRecipes" element={<PersonalRecipes />} />
         <Route path="/RecipesList" element={<RecipesList />} />
-        <Route path="/Weekly" element={<Weekly/>} />
+        <Route path="/Weekly" element={<Weekly />} />
         <Route path="/AdminApproval" element={<AdminApproval />} />
         <Route path="/UsersRecipes" element={<UsersRecipes />} />
+        <Route path="/AdminDelete" element={<div>Admin Delete</div>} />
       </Routes>
     </>
   );
 }
-
-

@@ -18,7 +18,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    backgroundColor: theme.palette.common.lightblue,
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -36,7 +36,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-class AdminApproval extends Component {
+/*----------------------*/
+class AdminDelete extends Component {
   constructor(props) {
     super(props);
     this.state = { recipes: [], dialogOpen: false, recipeStatus: "" };
