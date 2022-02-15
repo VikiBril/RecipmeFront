@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
+import LinesEllipsis from 'react-lines-ellipsis'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import { Fab, Grid } from '@mui/material';
@@ -17,19 +18,19 @@ import { weekNumber } from 'weeknumber';
 import PersonalRecipeData from './PersonalRecipeData';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 const styleFab = {
-  width: "110px",
-  marginLeft: "25%",
   height: "40px",
-  fontSize: "9px",
+  flex: 1,
+  fontSize: "10px",
   fontWeight: "bold",
+  bottom:0,
   border: "2.10345px solid #FFFFFF",
   boxShadow: "0px 4.2069px 4.2069px (236, 236, 236, 1)",
   backgroundColor: "#5a9e6c",
-  color: "white"
+  color: "white",
 };
 const styleCard = {
   width: "150px" ,
-  height: "260px",
+  alignItems: 'center',
   fontFamily: "Arial",
   left: "50px",
   top: "114px",
@@ -88,7 +89,7 @@ class Recipe extends Component {
     const showingData = this.props.recipeType === 1;
     return (
       <Grid contuner item >
-      <Card sytle={styleCard} className="Card" sx={{maxWidth: "270px",borderRadius: "30px"}}>
+      <Card sytle={styleCard} className="Card" sx={{height: "500px",maxWidth: "270px",borderRadius: "30px"}}>
         <CardMedia sx={{ maxHeight: "150px" }}
           component="img"
           height="130"
@@ -101,9 +102,15 @@ class Recipe extends Component {
           <Typography gutterBottom variant="h5" component="div">
             {this.props.name}
           </Typography>
-          <Typography  noWrap={true} display="block" variant="body2" color="text.secondary">
-            {this.props.description}
-            <Button onClick={() => this.setState({ shown: !this.state.shown })}>Show more</Button>
+          
+          <Typography display="block" variant="body2" color="text.secondary">
+          <LinesEllipsis
+              text={this.props.description}
+              maxLine='3'
+              ellipsis='...'
+              trimRight
+              basedOn='letters'
+            />
           </Typography>
           {showingData ? <PersonalRecipeData {...this.props}> </PersonalRecipeData> : null}
           <Typography variant="body2" color="text.primary" sx={{ fontWeight: 'bold'}}>
@@ -144,11 +151,11 @@ class Recipe extends Component {
           <TextField sx={{ fontSize: "5px" }} id="outlined-basic" label="repeat" variant="standard"
             onChange={event => this.repeat = event.target.value} ></TextField>
         </CardContent>
+        <Grid contuiner>
         <CardActions>
           <Fab style={styleFab} size="small" variant="extended">
             <EventAvailableIcon onClick={this.handleClick}></EventAvailableIcon>
             Add to schedule</Fab>
-          {/* <Button size="small">Learn More</Button> */}
         </CardActions>
         <Dialog
           open={this.state.open}
@@ -164,6 +171,7 @@ class Recipe extends Component {
             <Button onClick={this.handleClose}>Close</Button>
           </DialogActions>
         </Dialog>
+        </Grid>
       </Card>
       </Grid>
     );
