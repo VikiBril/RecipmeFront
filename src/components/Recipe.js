@@ -5,14 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import { Fab, Grid ,Box} from '@mui/material';
+import { Fab, Grid } from '@mui/material';
 import DialogTitle from '@mui/material/DialogTitle';
 import { weekNumber } from 'weeknumber';
 import PersonalRecipeData from './PersonalRecipeData';
@@ -29,7 +28,7 @@ const styleFab = {
   color: "white"
 };
 const styleCard = {
-  width: "290px",
+  width: "150px" ,
   height: "260px",
   fontFamily: "Arial",
   left: "50px",
@@ -38,10 +37,6 @@ const styleCard = {
   boxShadow: "0px 100px 80px rgba(153, 165, 236, 0.05), 0px 64.8148px 46.8519px rgba(153, 165, 236, 0.037963), 0px 38.5185px 25.4815px rgba(153, 165, 236, 0.0303704), 0px 20px 13px rgba(153, 165, 236, 0.025), 0px 8.14815px 6.51852px rgba(153, 165, 236, 0.0196296), 0px 1.85185px 3.14815px rgba(153, 165, 236, 0.012037)",
 };
 
-const styleBoxIcon = {
-  marginLeft: "200px",
-  marginTop: "-19px",
-};
 
 class Recipe extends Component {
 
@@ -53,6 +48,10 @@ class Recipe extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOpen = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handelUrl=this.handelUrl.bind(this);
+  }
+  handelUrl(){
+    const url=this.props.url;
   }
   handleClickOpen() {
     this.setState({ open: true });
@@ -61,6 +60,7 @@ class Recipe extends Component {
   handleClose() {
     this.setState({ open: false });
   };
+
 
   handleClick() {
     const url = "http://localhost:3001";
@@ -87,28 +87,29 @@ class Recipe extends Component {
   render() {
     const showingData = this.props.recipeType === 1;
     return (
-      <Grid contuner item xs={8} sm={6} xl={4} >
-      <Card sytle={styleCard} className="Card" sx={{  borderRadius: "30px",
-      marginBottom: "20px", maxWidth: 250 }} item xs={8} sm={6} xl={4}>
-        <CardMedia sx={{ maxHeight: "110px" }}
+      <Grid contuner item >
+      <Card sytle={styleCard} className="Card" sx={{maxWidth: "270px",borderRadius: "30px"}}>
+        <CardMedia sx={{ maxHeight: "150px" }}
           component="img"
-          height="110"
+          height="130"
+          onClick={this.handelUrl}
           image={this.props.imgurl}
           alt="image of recipe"
           title="image of recipe"
         />
-        <CardContent>
+        <CardContent >
           <Typography gutterBottom variant="h5" component="div">
             {this.props.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography  noWrap={true} display="block" variant="body2" color="text.secondary">
             {this.props.description}
+            <Button onClick={() => this.setState({ shown: !this.state.shown })}>Show more</Button>
           </Typography>
           {showingData ? <PersonalRecipeData {...this.props}> </PersonalRecipeData> : null}
           <Typography variant="body2" color="text.primary" sx={{ fontWeight: 'bold'}}>
             Set day and time:
           </Typography>
-          <Grid container columnSpacing={{aglinContent:"center", xs: 1, sm: 2, md: 6 }}>
+          <Grid container columnSpacing={{aglinContent:"center", xs: 12, sm: 4, md: 6 }}>
             <Grid item xs={5}>
               <Select sx={{ width: 100, height: 30, fontSize: "12px" }}
                 labelId="demo-simple-select-label"

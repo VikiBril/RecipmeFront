@@ -42,7 +42,7 @@ class Login extends Component {
       userId: this.state.userId,
       password: this.state.password
     };
-    axios.get(`${url}/user/login/?userId=${this.state.userId}&${this.state.password}`)
+    axios.get(`${url}/user/login/?userId=${this.state.userId}&password=${this.state.password}`)
       .then(() => {
         this.setState({ userId: this.props.userId, password: this.props.password });
       }).catch((err) => console.log(err));
@@ -54,9 +54,9 @@ class Login extends Component {
           <Grid align='center'></Grid>
           <img src={Logo} alt="Logo" style={styleImg} />
           <h2>Sign In</h2>
-          <TextField label='Username' placeholder='Enter Email' fullWidth required />
-          <TextField label='Password' placeholder='Enter password' type='password' fullWidth required />
-          <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth onSubmit={this.onSubmit}>Sign in</Button>
+          <TextField label='Username' placeholder='Enter Email' fullWidth required onChange={event => this.state.userId = event.target.value}/>
+          <TextField label='Password' placeholder='Enter password' type='password' fullWidth required onChange={event => this.state.password = event.target.value} />
+          <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth onClick={()=>this.handleSubmit()}>Sign in</Button>
         </Paper >
       </Grid >
     );

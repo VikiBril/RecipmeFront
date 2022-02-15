@@ -3,7 +3,7 @@ import Recipe from "./Recipe";
 import axios from 'axios';
 import { weekNumber } from 'weeknumber';
 import SearchComponent from "./Search";
-import { Grid } from '@mui/material';
+import { Grid ,Container } from '@mui/material';
 
 class RecipesList extends Component {
   constructor(props) {
@@ -11,32 +11,38 @@ class RecipesList extends Component {
     var today = weekNumber(new Date());
     console.log(today);
 
-    this.state = {recipes: []};
+    this.state = { recipes: [] };
     this.searchRecipe = this.searchRecipe.bind(this);
   }
 
   searchRecipe(ingredients) {
     const url = "http://localhost:3001";
     axios.get(`${url}/recipe/ingredients?ingredients=${ingredients}`)
-      .then((recipes) =>{
+      .then((recipes) => {
         this.setState({ recipes: recipes.data });
-      }).catch((err)=>console.log(err));
+      }).catch((err) => console.log(err));
   }
-  
+
   render() {
+
     const recipeList = this.state.recipes.map((recipe) => {
       const props = {
         name: `${recipe['recipe']['label']}`,
         description: `${recipe['recipe']['ingredientLines']}`,
         imgurl: `${recipe['recipe']['images']['REGULAR']['url']}`,
       };
-      return <Recipe key={props.name} {...props} />;
+      return <Grid item xs={12} md={4} sm={3}><Recipe key={props.name} {...props} /></Grid>;
     });
-    return      (
-      <Grid alignItems="center">
-      <SearchComponent searchRecipe={this.searchRecipe}></SearchComponent>
-      {recipeList}
-      </Grid>);
+    return (
+      <Container>
+        <Grid item aglinContent="center" >
+        <SearchComponent searchRecipe={this.searchRecipe}></SearchComponent>
+        <Grid container>
+        {recipeList}
+        </Grid>
+        </Grid>
+
+      </Container>);
   }
 }
 

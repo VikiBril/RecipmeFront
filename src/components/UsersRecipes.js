@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Recipe from "./Recipe";
 import axios from 'axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,19 +9,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Fab } from '@mui/material';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import  { Navigate  } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 
 
 const styleFab = {
     width: "150px",
     height: "50px",
-    fontSize:"10px",
+    fontSize:"12px",
     fontWeight: "bold",
-    border: "2.10345px solid #FFFFFF",
     boxShadow: "0px 4.2069px 4.2069px (236, 236, 236, 1)",
-    backgroundColor: "#5a9e6c",
-    color: "white"
+    backgroundColor: "#8fcbd9",
+    color: "black"
   };
 
 class UsersRecipes extends Component {
@@ -72,7 +69,7 @@ class UsersRecipes extends Component {
 
                                     <Fab style={styleFab} size="small" variant="extended" >
                                     <EventAvailableIcon ></EventAvailableIcon>
-                                    Add to schedule
+                                    show {row.firstName} schedule
                                     </Fab>
                                     </Link>
                                 </TableCell>
