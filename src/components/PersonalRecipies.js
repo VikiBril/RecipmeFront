@@ -50,7 +50,8 @@ class PersonalRecipes extends Component {
       "day": day,
       "recipeType": 1,
       "ingredients": ingredients,
-      "description": description
+      "description": description,
+
     }
     console.log(postBody);
     axios.post(`${this.serverUrl}/recipe`, postBody)
@@ -60,8 +61,15 @@ class PersonalRecipes extends Component {
   }
 
   delete(id) {
-    this.recipesDataList = this.recipesDataList.filter(recipe => recipe.id !== id)
-    this.displayAddForm();
+    console.log(id);
+    axios.delete(`${this.serverUrl}/recipe`,{
+    data: {
+        id: id
+      }
+    })
+    .then(() => {
+      window.location.reload(false);
+    }).catch((err) => console.log(err));
   }
 
   update(recipeData, id) {

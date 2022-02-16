@@ -32,6 +32,7 @@ class PersonalRecipeData extends Component {
                       'day': this.props.day,
                       'hour': this.props.hour,
                       'week': this.props.week,
+                      'status': this.props.status,
                       '_id':this.props._id}
     this.props.updateForm(properies, this.disableSelctedBorder);
   }
@@ -45,7 +46,7 @@ class PersonalRecipeData extends Component {
         </Fab>
         <Fab size="medium" style={styleFab} aria-label="delete" >
               <DeleteIcon onClick={() => {
-              this.props.deleteRecipe(this.props.recipeId)}} />
+              this.props.deleteRecipe(this.props._id)}} />
         </Fab>
         </Box> 
       </>

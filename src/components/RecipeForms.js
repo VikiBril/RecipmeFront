@@ -54,6 +54,7 @@ const styleCard = {
   height: "752px",
   left: "10px",
   top: "114px",
+
   backgroundColor: "#FFFFFF",
   borderRadius: "25px",
 };
