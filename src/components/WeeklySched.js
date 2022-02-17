@@ -3,12 +3,16 @@ import axios from 'axios';
 import { weekNumber } from 'weeknumber';
 import ScheduleTable from './ScheduleTable';
 import RecipeDialog from './RecipeDialog';
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+
+
 
 class WeeklySched extends Component {
     constructor(props) {
         super(props);
-        this.week = weekNumber(new Date());
-        this.state = {recipes: null, dialogOpen:false};
+        const week = weekNumber(new Date());
+        this.state = {week: week,recipes: null, dialogOpen:false};
         this.url = "http://localhost:3001";
         this.recipeUrl = ""
         this.recipeName = ""
@@ -17,11 +21,16 @@ class WeeklySched extends Component {
         this.getRecipies = this.getRecipies.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
         this.openDialog = this.openDialog.bind(this);
+        this.render = this.render.bind(this);
         }
 
     closeDialog(){
         this.setState({dialogOpen:false})
     }
+
+    valuetext(value) {
+        return `week: ${value}`;
+      }
 
     openDialog(recipeUrl,recipeName,recipeId,description,ingredients,imgUrl){
         this.recipeUrl = recipeUrl;
@@ -43,7 +52,7 @@ class WeeklySched extends Component {
         const params = new URLSearchParams(windowUrl);
         console.log(params.get("userId"));
         const userId = params.get("userId") != null ? params.get("userId") :"michal@gmail.com";
-        axios.get(`${this.url}/recipe?user=${userId}&week=${this.week}`)
+        axios.get(`${this.url}/recipe?user=${userId}&week=${this.state.week}`)
         .then((recipes) =>{
             const recipesDict = {}
             for (var i=1; i <= 7; i++) {
@@ -73,6 +82,17 @@ class WeeklySched extends Component {
 
     render(){
         return(<>
+        <Slider
+  aria-label="Temperature"
+  defaultValue={this.state.week}
+  getAriaValueText={this.valuetext}
+  valueLabelDisplay="auto"
+  step={1}
+  marks
+  min={0}
+  max={52}
+  onChangeCommitted={(event,value) => {this.setState({ week:value });this.getRecipies()}}
+/>
         <RecipeDialog open={this.state.dialogOpen}
                      closeDialog = {this.closeDialog}
                      recipeName={this.recipeName}
