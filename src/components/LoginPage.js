@@ -43,8 +43,12 @@ class Login extends Component {
       password: this.state.password
     };
     axios.get(`${url}/user/login/?userId=${this.state.userId}&password=${this.state.password}`)
-      .then(() => {
+      .then((res) => {
         this.setState({ userId: this.props.userId, password: this.props.password });
+        localStorage.setItem("userId", res.data.user.userId);
+        localStorage.setItem("userType", res.data.user.userType);
+        localStorage.setItem("token", res.data.accessToken);
+        window.location.href = "/RecipesList";
       }).catch((err) => console.log(err));
   };
   render() {

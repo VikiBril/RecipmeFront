@@ -18,10 +18,16 @@ class WeeklySched extends Component {
         this.recipeName = ""
         this.recipeId = ""
         this.imgUrl = ""
+        const windowUrl = window.location.search;
+        const params = new URLSearchParams(windowUrl);
+        console.log(params.get("userId"));
+        this.userId = params.get("userId") != null ? params.get("userId") :localStorage.getItem("userId");
+        this.isOwner = this.userId == localStorage.getItem("userId");
         this.getRecipies = this.getRecipies.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
         this.openDialog = this.openDialog.bind(this);
         this.render = this.render.bind(this);
+        
         }
 
     closeDialog(){
@@ -48,11 +54,8 @@ class WeeklySched extends Component {
     }
 
     getRecipies() {
-        const windowUrl = window.location.search;
-        const params = new URLSearchParams(windowUrl);
-        console.log(params.get("userId"));
-        const userId = params.get("userId") != null ? params.get("userId") :"michal@gmail.com";
-        axios.get(`${this.url}/recipe?user=${userId}&week=${this.state.week}`)
+
+        axios.get(`${this.url}/recipe?user=${this.userId}&week=${this.state.week}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
         .then((recipes) =>{
             const recipesDict = {}
             for (var i=1; i <= 7; i++) {
@@ -73,7 +76,11 @@ class WeeklySched extends Component {
                 
             });
         this.setState({ recipes: recipesDict });
-        }).catch((err)=>console.log(err));
+        }).catch((err)=>{
+            if (err.response.status == 403) {
+                window.location.href = "/";
+              }
+        });
     }
 
     createData(name, calories, fat, carbs, protein) {
@@ -100,7 +107,7 @@ class WeeklySched extends Component {
                      recipeUrl={this.recipeUrl}
                      description={this.description}
                      ingredients={this.ingredients}
-                     imgUrl={this.imgUrl}
+                     imgUrl={this.imgUrl} isOwner={this.isOwner}
                      ></RecipeDialog>
 
         <ScheduleTable key={1} recipes={this.state.recipes} openDialog={this.openDialog}>

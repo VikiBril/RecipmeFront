@@ -34,11 +34,15 @@ class UsersRecipes extends Component {
 
     }
     getUsers() {
-        axios.get(`${this.serverUrl}/user/users?userId=michal@gmail.com`).then(
+        axios.get(`${this.serverUrl}/user/users?userId=${localStorage.getItem('userId')}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }}).then(
             (users) => {console.log({users}) 
             this.setState({ users: users.data })
             }
-        );
+        ).catch((err)=>{
+            if (err.response.status == 403) {
+                window.location.href = "/";
+              }
+        });
     }
     componentDidMount() {
         this.getUsers()

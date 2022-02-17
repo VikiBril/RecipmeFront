@@ -4,6 +4,7 @@ import axios from 'axios';
 import { weekNumber } from 'weeknumber';
 import SearchComponent from "./Search";
 import { Grid ,Container } from '@mui/material';
+import {withRouter} from 'react-router-dom';
 
 class RecipesList extends Component {
   constructor(props) {
@@ -17,10 +18,14 @@ class RecipesList extends Component {
 
   searchRecipe(ingredients) {
     const url = "http://localhost:3001";
-    axios.get(`${url}/recipe/ingredients?ingredients=${ingredients}`)
+    axios.get(`${url}/recipe/ingredients?ingredients=${ingredients}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) => {
         this.setState({ recipes: recipes.data });
-      }).catch((err) => console.log(err));
+      }).catch((err) =>  {
+        if (err.response.status == 403) {
+          window.location.href = "/";
+        }
+      });
   }
 
   render() {

@@ -11,11 +11,16 @@ export default function AppRouter() {
     <>
       <Routes>
         <Route path="/" element={<Login/>} />
+        { "Bearer "+localStorage.getItem("token")?<>
         <Route path="/myRecipes" element={<PersonalRecipes />} />
         <Route path="/RecipesList" element={<RecipesList />} />
         <Route path="/Weekly" element={<Weekly/>} />
-        <Route path="/AdminApproval" element={<AdminApproval />} />
+
         <Route path="/UsersRecipes" element={<UsersRecipes />} />
+        </>:null}
+        {localStorage.getItem("userType") == 0 && "Bearer "+localStorage.getItem("token")? <>
+        <Route path="/AdminApproval" element={<AdminApproval />} />
+        </>:null}
       </Routes>
     </>
   );

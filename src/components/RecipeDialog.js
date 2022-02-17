@@ -18,17 +18,22 @@ class WeeklySched extends Component {
           };
         this.closeRecipeData = this.closeRecipeData.bind(this);
         this.remove = this.remove.bind(this);
-
+        this.renderOnwerBtns = this.renderOnwerBtns.bind(this);
+        
     }
 
     remove(id) {
         const postBody = {
           "id": id,
         }
-        axios.post(`${this.serverUrl}/recipe/remove`, postBody)
+        axios.post(`${this.serverUrl}/recipe/remove`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
           .then(() => {
             window.location.reload(false);
-          }).catch((err) => console.log(err));
+          }).catch((err) =>  {
+            if (err.response.status == 403) {
+              window.location.href = "/";
+            }
+          });
       }
 
     openRecipeData(){
@@ -37,6 +42,20 @@ class WeeklySched extends Component {
 
     closeRecipeData(){
         this.setState({dataOpen: false});
+    }
+
+    renderOnwerBtns() {
+        return (<><ListItem >
+
+            <Button href={"/myRecipes?recipeId="+this.props.recipeId}>
+                Edit
+            </Button>
+        </ListItem>
+        <ListItem  >
+            <Button onClick={()=>{this.remove(this.props.recipeId)}}>
+                Remove
+            </Button>
+        </ListItem></>);
     }
 
     render(){
@@ -50,17 +69,10 @@ class WeeklySched extends Component {
                     <Button onClick={()=>{this.openRecipeData()}}>
                         Open
                     </Button>
-                </ListItem>
-                <ListItem >
-                    <Button href={"/myRecipes?recipeId="+this.props.recipeId}>
-                        Edit
-                    </Button>
-                </ListItem>
-                <ListItem  >
-                    <Button onClick={()=>{this.remove(this.props.recipeId)}}>
-                        Remove
-                    </Button>
-                </ListItem>
+                </ListItem>{this.props.isOwner ?
+                this.renderOnwerBtns()
+                :null
+                }
                 <ListItem  >
                     <Button onClick={()=>{this.props.closeDialog()}}>
                     Close

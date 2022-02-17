@@ -57,7 +57,7 @@ class AdminApproval extends Component {
   };
 
   searchRecipe() {
-    axios.get(`${this.url}/recipe/approval`)
+    axios.get(`${this.url}/recipe/approval`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) =>{
         this.setState({ recipes: recipes.data });
       }).catch((err)=>console.log(err));
@@ -68,10 +68,14 @@ class AdminApproval extends Component {
   }
   
   recipeStatus(status, recipeId) {
-    axios.post(`${this.url}/recipe/approval`,{approved:status,id:recipeId})
+    axios.post(`${this.url}/recipe/approval`,{approved:status,id:recipeId},{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
     .then(() =>{
       this.handleClickOpen(status);
-    }).catch((err)=>console.log(err));
+    }).catch((err) =>  {
+      if (err.response.status == 403) {
+        window.location.href = "/";
+      }
+    });
   }
 
   render() {

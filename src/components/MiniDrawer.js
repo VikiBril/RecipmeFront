@@ -163,8 +163,9 @@ export default function MiniDrawer({ children }) {
           })}
         </List>
         <Divider />
-        {/* <List>
-          {[
+        { localStorage.getItem("userType") == 0 ?<>
+        <List>
+          { [
             { url: "/AdminApproval", label: "Approval requests" },
             { url: "/Delete", label: "Delete requests" },
             { url: "/BlackList", label: "Blacklist Recipies" },
@@ -181,7 +182,8 @@ export default function MiniDrawer({ children }) {
               </NavLink>
             );
           })}
-        </List> */}
+        </List></>
+        :null}
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />

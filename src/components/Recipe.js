@@ -74,7 +74,7 @@ class Recipe extends Component {
       "url": this.props.url,
       "imgUrl": this.props.imgurl,
       "recipeName": this.props.name,
-      "user": "michal@gmail.com",
+      "user": localStorage.getItem("userId"),
       "week": week,
       "repeat": this.repeat,
       "hour": this.state.hour,
@@ -83,10 +83,14 @@ class Recipe extends Component {
       "description": this.props.description,
       "approved": approved
     }
-    axios.post(`${url}/recipe`, postBody)
+    axios.post(`${url}/recipe`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) => {
         this.setState({ recipes: recipes.data, open: true });
-      }).catch((err) => console.log(err));
+      }).catch((err) =>  {
+        if (err.response.status == 403) {
+          window.location.href = "/";
+        }
+      });
   };
 
   render() {
