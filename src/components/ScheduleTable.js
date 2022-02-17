@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Typography } from "@mui/material";
+import Button from '@mui/material/Button'
 
 const styleCell = {
     width: "50px"
@@ -42,9 +43,7 @@ const meals = ["Breakfest","Lunch","Dinner"];
 
 class ScheduleTable extends Component {
     render() {
-        if(this.props.recipes!=null){
-        console.log(this.props.recipes);
-        }
+      console.log(this.props.recipes)
   return (
     this.props.recipes != null ?  
     <TableContainer component={Paper}>
@@ -70,26 +69,34 @@ class ScheduleTable extends Component {
             <StyledTableRow >
               <StyledTableCell style={styleCell} align="center">{meals[i-1]}</StyledTableCell>
               <StyledTableCell style={styleCell} align="center">{this.props.recipes[1][i].map((recipe)=>(
-                  <a id={recipe.url} href={recipe.url}>{recipe.name}</a>
+                <Button variant="text" onClick={()=>this.props.openDialog(recipe.url,recipe.name,recipe._id,recipe.description,recipe.ingredients,recipe.imgUrl)} >
+                    {recipe.name}
+                  </Button>
               ))}</StyledTableCell>
               <StyledTableCell style={styleCell} align="center">{this.props.recipes[2][i].map((recipe)=>(
-                  <a id={recipe.url} href={recipe.url}>{recipe.name}</a>
-              ))}</StyledTableCell>
+                <Button variant="text" onClick={()=>this.props.openDialog(recipe.url,recipe.name,recipe._id,recipe.description,recipe.ingredients,recipe.imgUrl)} >
+                {recipe.name}
+              </Button>           ))}</StyledTableCell>
               <StyledTableCell style={styleCell} align="center">{this.props.recipes[3][i].map((recipe)=>(
-                  <a id={recipe.url} href={recipe.url}>{recipe.name}</a>
-              ))}</StyledTableCell>
+                <Button variant="text" onClick={()=>this.props.openDialog(recipe.url,recipe.name,recipe._id,recipe.description,recipe.ingredients,recipe.imgUrl)} >
+                {recipe.name}
+              </Button>              ))}</StyledTableCell>
                 <StyledTableCell style={styleCell} align="center">{this.props.recipes[4][i].map((recipe)=>(
-                  <a id={recipe.url} href={recipe.url}>{recipe.name}</a>
-              ))}</StyledTableCell>
+                <Button variant="text" onClick={()=>this.props.openDialog(recipe.url,recipe.name,recipe._id,recipe.description,recipe.ingredients,recipe.imgUrl)} >
+                {recipe.name}
+              </Button>         ))}</StyledTableCell>
               <StyledTableCell style={styleCell} align="center">{this.props.recipes[5][i].map((recipe)=>(
-                  <a id={recipe.url} href={recipe.url}>{recipe.name}</a>
-              ))}</StyledTableCell>
+                <Button variant="text" onClick={()=>this.props.openDialog(recipe.url,recipe.name,recipe._id,recipe.description,recipe.ingredients,recipe.imgUrl)} >
+                {recipe.name}
+              </Button>             ))}</StyledTableCell>
               <StyledTableCell style={styleCell} align="center">{this.props.recipes[6][i].map((recipe)=>(
-                  <a id={recipe.url} href={recipe.url}>{recipe.name}</a>
-              ))}</StyledTableCell>
+                <Button variant="text" onClick={()=>this.props.openDialog(recipe.url,recipe.name,recipe._id,recipe.description,recipe.ingredients,recipe.imgUrl)}>
+                {recipe.name}
+              </Button>             ))}</StyledTableCell>
                             <StyledTableCell style={styleCell} align="center">{this.props.recipes[7][i].map((recipe)=>(
-                  <a id={recipe.url} href={recipe.url}>{recipe.name}</a>
-              ))}</StyledTableCell>
+                <Button variant="text" onClick={()=>this.props.openDialog(recipe.url,recipe.name,recipe._id,recipe.description,recipe.ingredients,recipe.imgUrl)} >
+                {recipe.name}
+              </Button>             ))}</StyledTableCell>
             </StyledTableRow>
             ))}
         </TableBody>

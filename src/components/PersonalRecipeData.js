@@ -3,6 +3,8 @@ import Typography from "@mui/material/Typography";
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import RecipeDataDialog from "./RecipeDataDialog";
 import { Fab } from '@mui/material';
 const styleFab = {
   width: "35.76px",
@@ -20,8 +22,18 @@ class PersonalRecipeData extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {open:false}
     this.updateCard = this.updateCard.bind(this);
+    this.closeRecipeData = this.closeRecipeData.bind(this);
 
+  }
+
+  closeRecipeData() {
+    this.setState({open:false});
+  }
+
+  openRecipeData() {
+    this.setState({open:true});
   }
     
   updateCard() {
@@ -40,6 +52,12 @@ class PersonalRecipeData extends Component {
   render() {
     return (
       <>
+      <RecipeDataDialog dataOpen={this.state.open}
+      imgUrl={this.props.imgurl}
+      recipeName={this.props.name}
+      ingredients={this.props.ingredients}
+      description={this.props.description}
+      closeRecipeData={()=>this.closeRecipeData()}></RecipeDataDialog>
       <Box style={styleBoxIcon}>
         <Fab size="medium" style={styleFab} aria-label="edit" >
           <EditIcon onClick={() => {this.updateCard()}} />
@@ -48,6 +66,12 @@ class PersonalRecipeData extends Component {
               <DeleteIcon onClick={() => {
               this.props.deleteRecipe(this.props._id)}} />
         </Fab>
+        <Fab size="medium" style={styleFab} aria-label="delete" >
+              <DescriptionOutlinedIcon onClick={() => {
+              this.openRecipeData()}} />
+        </Fab>
+
+        
         </Box> 
       </>
     );

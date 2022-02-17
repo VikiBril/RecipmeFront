@@ -2,21 +2,37 @@ import React, { Component } from "react";
 import axios from 'axios';
 import { weekNumber } from 'weeknumber';
 import ScheduleTable from './ScheduleTable';
-import {useSearchParams} from "react-router-dom";
+import RecipeDialog from './RecipeDialog';
 
 class WeeklySched extends Component {
     constructor(props) {
         super(props);
         this.week = weekNumber(new Date());
-        this.state = {recipes: null};
+        this.state = {recipes: null, dialogOpen:false};
         this.url = "http://localhost:3001";
-        this.rows = [
-            this.createData('Breakfast','Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt,Frozen yoghurt', 'Frozen yoghurt', 24, 4.0),
-            this.createData('Lunch','Ice cream sandwich', 237, 9.0, 37, 4.3),
-            this.createData('Dinner','Eclair', 262, 16.0, 24, 6.0),
-            ];
+        this.recipeUrl = ""
+        this.recipeName = ""
+        this.recipeId = ""
+        this.imgUrl = ""
         this.getRecipies = this.getRecipies.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+        this.openDialog = this.openDialog.bind(this);
         }
+
+    closeDialog(){
+        this.setState({dialogOpen:false})
+    }
+
+    openDialog(recipeUrl,recipeName,recipeId,description,ingredients,imgUrl){
+        this.recipeUrl = recipeUrl;
+        this.recipeName = recipeName;
+        this.recipeId = recipeId;
+        this.ingredients=ingredients 
+        this.description=description
+        this.imgUrl=imgUrl;
+
+        this.setState({dialogOpen:true});
+    }
 
     componentDidMount(){
         this.getRecipies();
@@ -41,7 +57,10 @@ class WeeklySched extends Component {
                 const day = parseInt(recipe['day'], 10);
                 const hour = recipe['hour'];
                 recipesDict[day][hour].push({name:recipe['recipeName'],
-                url:recipe["url"]})
+                url:recipe["url"],_id:recipe["_id"],
+                description:recipe["description"],
+                ingredients: recipe["ingredients"],imgUrl:recipe["image"]
+            })
                 
             });
         this.setState({ recipes: recipesDict });
@@ -53,7 +72,19 @@ class WeeklySched extends Component {
       }
 
     render(){
-        return(<ScheduleTable key={1} recipes={this.state.recipes}></ScheduleTable>);
+        return(<>
+        <RecipeDialog open={this.state.dialogOpen}
+                     closeDialog = {this.closeDialog}
+                     recipeName={this.recipeName}
+                     recipeId={this.recipeId}
+                     recipeUrl={this.recipeUrl}
+                     description={this.description}
+                     ingredients={this.ingredients}
+                     imgUrl={this.imgUrl}
+                     ></RecipeDialog>
+
+        <ScheduleTable key={1} recipes={this.state.recipes} openDialog={this.openDialog}>
+        </ScheduleTable></>);
     }
 }
 export default WeeklySched;

@@ -71,8 +71,8 @@ class Recipe extends Component {
 
     const postBody = {
       "day": this.state.day,
-      "url": "https://www.foodnetwork.com/recipes/ina-garten/brown-rice-tomatoes-and-basil-recipe-1945224",
-      "imgUrl": this.state.imgurl,
+      "url": this.props.url,
+      "imgUrl": this.props.imgurl,
       "recipeName": this.props.name,
       "user": "michal@gmail.com",
       "week": week,
@@ -80,7 +80,7 @@ class Recipe extends Component {
       "hour": this.state.hour,
       "recipeType": this.props.recipeType,
       "ingredients": this.props.ingredients,
-      "description": "put rise in hot water, wait for 15 minutes",
+      "description": this.props.description,
       "approved": approved
     }
     axios.post(`${url}/recipe`, postBody)

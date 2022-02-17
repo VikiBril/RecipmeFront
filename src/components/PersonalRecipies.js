@@ -103,9 +103,19 @@ class PersonalRecipes extends Component {
 
   loadRecipies() {
     console.log(this.state.week);
-    axios.get(`${this.serverUrl}/recipe?user=michal@gmail.com&week=${this.state.week}`)
+    const windowUrl = window.location.search;
+    const params = new URLSearchParams(windowUrl);
+    const recipeId = params.get("recipeId");
+    axios.get(`${this.serverUrl}/recipe?user=michal@gmail.com`)
       .then((recipes) => {
-        this.setState({ recipes: recipes.data });
+        const recipesList = recipes.data;
+        if(recipeId != null){
+          const index = recipesList.findIndex(item => item._id == recipeId);
+          const tmp = recipesList[index];
+          recipesList[index] = recipesList[0];
+          recipesList[0] = tmp;
+        }
+        this.setState({ recipes: recipesList });
       }).catch((err) => console.log(err));
   }
 
