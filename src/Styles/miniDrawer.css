@@ -1,0 +1,23 @@
+
+.AppBarStyle{
+    position:fixed;
+    background-color:rgb(101, 49, 150);
+}
+.iconStyle{
+    color: rgb(154, 120, 158);
+}
+.recipmeLabel{
+    font-size: larger;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-left: 20px;
+}
+.listLabel{
+    margin-left: 35px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: italic;
+    color: rgb(154, 120, 158);
+}
+
+.iconColor{
+    color: rgb(61, 110, 199)
+}

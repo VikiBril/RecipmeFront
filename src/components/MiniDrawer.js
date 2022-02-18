@@ -23,6 +23,7 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import HomeIcon from "@mui/icons-material/Home";
+import "../Styles/miniDrawer.css";
 
 const drawerWidth = 240;
 
@@ -48,10 +49,10 @@ const closedMixin = (theme) => ({
 });
 
 const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
+  // display: "flex",
+  // alignItems: "center",
+  // justifyContent: "flex-end",
+  // padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -115,25 +116,20 @@ export default function MiniDrawer({ children }) {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        open={open}
-        style={{ backgroundColor: "#8fcbd9" }}
-      >
+      <AppBar className="AppBarStyle" open={open}>
         <Toolbar>
           <IconButton
-            color="inherit"
+            className="iconStyle"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: "36px",
               ...(open && { display: "none" }),
             }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography className="recipmeLabel" noWrap component="div">
             RecipMe
           </Typography>
         </Toolbar>
@@ -149,21 +145,21 @@ export default function MiniDrawer({ children }) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List className="drawerLabel">
           {listOfIcons().map((item, index) => {
             const { label, url, icon: Icon } = item;
             return (
               <NavLink key={`${url}-${index}`} to={`${url}`}>
                 <ListItem button key={label}>
-                  <Icon></Icon>
-                  <ListItemText primary={label} />
+                  <Icon className={"iconColor"}></Icon>
+                  <ListItemText className="listLabel" primary={label} />
                 </ListItem>
               </NavLink>
             );
           })}
         </List>
         <Divider />
-        {/* <List>
+        <List>
           {[
             { url: "/AdminApproval", label: "Approval requests" },
             { url: "/Delete", label: "Delete requests" },
@@ -181,7 +177,7 @@ export default function MiniDrawer({ children }) {
               </NavLink>
             );
           })}
-        </List> */}
+        </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
