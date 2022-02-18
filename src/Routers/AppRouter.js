@@ -6,6 +6,7 @@ import UsersRecipes from "../Components/UsersRecipes";
 import RecipesList from "../Components/RecipesList";
 import PersonalRecipes from "../Components/PersonalRecipies";
 import AdminApproval from "../Components/AdminApproval";
+import AdminBlackList from "../Components/AdminBlackList";
 export default function AppRouter() {
   return (
     <>
@@ -20,6 +21,7 @@ export default function AppRouter() {
         </>:null}
         {localStorage.getItem("userType") == 0 && "Bearer "+localStorage.getItem("token")? <>
         <Route path="/AdminApproval" element={<AdminApproval />} />
+        <Route path="/AdminBlackList" element={<AdminBlackList />} />
         </>:null}
       </Routes>
     </>

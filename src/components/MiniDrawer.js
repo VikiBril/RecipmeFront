@@ -1,21 +1,15 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Icon from "@mui/material/Icon";
-import Box from "@mui/material/Box";
+import { Fab,Box,List, Divider,ListItem ,ListItemIcon, CssBaseline,ListItemText } from '@mui/material';
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { NavLink } from "react-router-dom";
@@ -98,7 +92,12 @@ export default function MiniDrawer({ children }) {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+ 
+  const handleLogout =()=> {
+      localStorage.clear();
+      window.location.href = '/';
 
+  };
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -133,6 +132,7 @@ export default function MiniDrawer({ children }) {
           >
             <MenuIcon />
           </IconButton>
+          {localStorage.getItem("userId") == null? null :<Fab onClick={handleLogout}>Log out</Fab>}
           <Typography variant="h6" noWrap component="div">
             RecipMe
           </Typography>
@@ -167,8 +167,7 @@ export default function MiniDrawer({ children }) {
         <List>
           { [
             { url: "/AdminApproval", label: "Approval requests" },
-            { url: "/Delete", label: "Delete requests" },
-            { url: "/BlackList", label: "Blacklist Recipies" },
+            { url: "/AdminBlackList", label: "Delete requests" },
           ].map((item, index) => {
             const { label, url } = item;
             return (

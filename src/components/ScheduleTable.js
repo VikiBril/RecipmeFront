@@ -48,7 +48,7 @@ class ScheduleTable extends Component {
     this.props.recipes != null ?  
     <TableContainer component={Paper}>
       <Typography align="center" variant="h3" component="div" gutterBottom>
-      Weekly meal schedule of {this.props.name}
+      Weekly meal schedule of {localStorage.getItem("userName")}
       </Typography>
       <Table sx={{ width: "900px", margin: "100px" }} aria-label="customized table">
         <TableHead sx={{ width: "900px" }}>

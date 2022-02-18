@@ -116,7 +116,7 @@ class PersonalRecipes extends Component {
     const windowUrl = window.location.search;
     const params = new URLSearchParams(windowUrl);
     const recipeId = params.get("recipeId");
-    axios.get(`${this.serverUrl}/recipe?user=${localStorage.getItem("userName")}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
+    axios.get(`${this.serverUrl}/recipe?user=${localStorage.getItem("userId")}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) => {
         const recipesList = recipes.data;
         if(recipeId != null){
