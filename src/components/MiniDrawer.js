@@ -1,6 +1,10 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Icon from "@mui/material/Icon";
+import axios from "axios";
+import Badge from "@mui/material/Badge";
+import MoveToInboxIcon from "@mui/icons-material/MoveToInbox";
+
 import {
   Fab,
   Box,
@@ -98,6 +102,28 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [requestToApprove, setRequestToApprove] = React.useState(0);
+
+  const isAdmin = React.useMemo(() => {
+    return (
+      localStorage.getItem("userType") == 0 &&
+      "Bearer " + localStorage.getItem("token")
+    );
+  }, []);
+  React.useEffect(() => {
+    if (isAdmin) {
+      axios
+        .get(`http://localhost:3001/recipe/approval`, {
+          headers: {
+            "x-access-token": "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((recipes) => {
+          setRequestToApprove((recipes.data || []).length);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isAdmin]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -137,7 +163,9 @@ export default function MiniDrawer({ children }) {
             <MenuIcon />
           </IconButton>
           {localStorage.getItem("userId") == null ? null : (
-            <Fab onClick={handleLogout}>Log out</Fab>
+            <Fab className="logOutbutton" onClick={handleLogout}>
+              Log out
+            </Fab>
           )}
           <Typography
             className="recipmeLabel"
@@ -178,16 +206,31 @@ export default function MiniDrawer({ children }) {
           <>
             <List>
               {[
-                { url: "/AdminApproval", label: "Approval requests" },
+                {
+                  url: "/AdminApproval",
+                  label: "Approval requests",
+                  icon: MoveToInboxIcon,
+                },
                 { url: "/AdminBlackList", label: "Delete requests" },
               ].map((item, index) => {
-                const { label, url } = item;
+                const { label, url, icon } = item;
+                const showBadge = isAdmin && url === "/AdminApproval";
+                console.log(requestToApprove);
                 return (
                   <NavLink key={`${url}-${index}`} to={`${url}`}>
                     <ListItem button key={label}>
-                      <ListItemIcon>
-                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                      </ListItemIcon>
+                      {!!showBadge ? (
+                        <Badge badgeContent={requestToApprove} color="primary">
+                          <ListItemIcon className="adminIcons">
+                            {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                          </ListItemIcon>
+                        </Badge>
+                      ) : (
+                        <ListItemIcon className="adminIcons">
+                          {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        </ListItemIcon>
+                      )}
+
                       <ListItemText primary={label} />
                     </ListItem>
                   </NavLink>

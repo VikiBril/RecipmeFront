@@ -3,13 +3,11 @@
     position:fixed;
     background-color:rgb(101, 49, 150);
 }
-.iconStyle{
-    color: rgb(154, 120, 158);
-}
+
 .recipmeLabel{
-    font-size: larger;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 29px;
     margin-left: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .listLabel{
     margin-left: 35px;
@@ -19,5 +17,16 @@
 }
 
 .iconColor{
-    color: rgb(61, 110, 199)
+    color: rgb(94, 69, 134);
+}
+.adminIcons{
+    color: rgb(123, 81, 128);
+}
+.logOutbutton{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:rgb(123, 81, 128);
+    font-size: 9px;
+    width: 40px;
+    height: 25px;
+
 }
