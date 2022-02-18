@@ -8,20 +8,26 @@ import Slider from "@mui/material/Slider";
 import "../Styles/weeklySched.css";
 
 class WeeklySched extends Component {
-  constructor(props) {
-    super(props);
-    const week = weekNumber(new Date());
-    this.state = { week: week, recipes: null, dialogOpen: false };
-    this.url = "http://localhost:3001";
-    this.recipeUrl = "";
-    this.recipeName = "";
-    this.recipeId = "";
-    this.imgUrl = "";
-    this.getRecipies = this.getRecipies.bind(this);
-    this.closeDialog = this.closeDialog.bind(this);
-    this.openDialog = this.openDialog.bind(this);
-    this.render = this.render.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        const week = weekNumber(new Date());
+        this.state = {week: week,recipes: null, dialogOpen:false};
+        this.url = "http://localhost:3001";
+        this.recipeUrl = ""
+        this.recipeName = ""
+        this.recipeId = ""
+        this.imgUrl = ""
+        const windowUrl = window.location.search;
+        const params = new URLSearchParams(windowUrl);
+        console.log(params.get("userId"));
+        this.userId = params.get("userId") != null ? params.get("userId") :localStorage.getItem("userId");
+        this.isOwner = this.userId == localStorage.getItem("userId");
+        this.getRecipies = this.getRecipies.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+        this.openDialog = this.openDialog.bind(this);
+        this.render = this.render.bind(this);
+        
+        }
 
   closeDialog() {
     this.setState({ dialogOpen: false });
@@ -53,22 +59,17 @@ class WeeklySched extends Component {
     this.getRecipies();
   }
 
-  getRecipies() {
-    const windowUrl = window.location.search;
-    const params = new URLSearchParams(windowUrl);
-    console.log(params.get("userId"));
-    const userId =
-      params.get("userId") != null ? params.get("userId") : "michal@gmail.com";
-    axios
-      .get(`${this.url}/recipe?user=${userId}&week=${this.state.week}`)
-      .then((recipes) => {
-        const recipesDict = {};
-        for (var i = 1; i <= 7; i++) {
-          recipesDict[i] = {};
-          for (var j = 1; j <= 3; j++) {
-            recipesDict[i][j] = [];
-          }
-        }
+    getRecipies() {
+
+        axios.get(`${this.url}/recipe?user=${this.userId}&week=${this.state.week}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
+        .then((recipes) =>{
+            const recipesDict = {}
+            for (var i=1; i <= 7; i++) {
+                recipesDict[i] = {};
+                for (var j=1; j <= 3; j++) {
+                    recipesDict[i][j] = [];
+                } 
+            } 
 
         recipes.data.forEach((recipe) => {
           const day = parseInt(recipe["day"], 10);
@@ -83,9 +84,12 @@ class WeeklySched extends Component {
           });
         });
         this.setState({ recipes: recipesDict });
-      })
-      .catch((err) => console.log(err));
-  }
+        }).catch((err)=>{
+            if (err.response.status == 403) {
+                window.location.href = "/";
+              }
+        });
+    }
 
   createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -96,29 +100,25 @@ class WeeklySched extends Component {
       <>
         <h2>Choose a week</h2>
         <Slider
-          aria-label="Temperature"
-          defaultValue={this.state.week}
-          getAriaValueText={this.valuetext}
-          valueLabelDisplay="auto"
-          step={1}
-          marks
-          min={0}
-          max={52}
-          onChangeCommitted={(event, value) => {
-            this.setState({ week: value });
-            this.getRecipies();
-          }}
-        />
-        <RecipeDialog
-          open={this.state.dialogOpen}
-          closeDialog={this.closeDialog}
-          recipeName={this.recipeName}
-          recipeId={this.recipeId}
-          recipeUrl={this.recipeUrl}
-          description={this.description}
-          ingredients={this.ingredients}
-          imgUrl={this.imgUrl}
-        ></RecipeDialog>
+  aria-label="Temperature"
+  defaultValue={this.state.week}
+  getAriaValueText={this.valuetext}
+  valueLabelDisplay="auto"
+  step={1}
+  marks
+  min={0}
+  max={52}
+  onChangeCommitted={(event,value) => {this.setState({ week:value });this.getRecipies()}}
+/>
+        <RecipeDialog open={this.state.dialogOpen}
+                     closeDialog = {this.closeDialog}
+                     recipeName={this.recipeName}
+                     recipeId={this.recipeId}
+                     recipeUrl={this.recipeUrl}
+                     description={this.description}
+                     ingredients={this.ingredients}
+                     imgUrl={this.imgUrl} isOwner={this.isOwner}
+                     ></RecipeDialog>
 
         <ScheduleTable
           key={1}

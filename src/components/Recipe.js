@@ -17,7 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { weekNumber } from 'weeknumber';
 import PersonalRecipeData from './PersonalRecipeData';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-
+import BugReportIcon from '@mui/icons-material/BugReport';
 const styleFab = {
   height: "40px",
   flex: 1,
@@ -46,23 +46,41 @@ class Recipe extends Component {
     super(props);
     this.state = { day: 1, hour: 1, open: false };
     this.repeat = 1;
+    this.dialogMessage = "has been saved";
     this.render = this.render.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClickOpen = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handelUrl=this.handelUrl.bind(this);
+    this.handleReport=this.handleReport.bind(this);
+    this.serverUrl = "http://localhost:3001"
   }
+
   handelUrl(){
-    const url=this.props.url;
+    window.location=this.props.url;
   }
+
   handleClickOpen() {
+    this.dialogMessage = "has been saved";
     this.setState({ open: true });
-  };
+  }
+
+  handleReport() {
+    const postBody = {url:this.props.url}
+    axios.post(`${this.serverUrl}/blacklist`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
+    .then(() => {
+      this.dialogMessage = "has been reported";
+      this.setState({ open: true });
+    }).catch((err) =>  {
+      if (err.response.status == 403) {
+        window.location.href = "/";
+      }
+    });
+  }
 
   handleClose() {
     this.setState({ open: false });
-  };
-
+  }
 
   handleClick() {
     const url = "http://localhost:3001";
@@ -74,7 +92,7 @@ class Recipe extends Component {
       "url": this.props.url,
       "imgUrl": this.props.imgurl,
       "recipeName": this.props.name,
-      "user": "michal@gmail.com",
+      "user": localStorage.getItem("userId"),
       "week": week,
       "repeat": this.repeat,
       "hour": this.state.hour,
@@ -83,14 +101,18 @@ class Recipe extends Component {
       "description": this.props.description,
       "approved": approved
     }
-    axios.post(`${url}/recipe`, postBody)
+    axios.post(`${url}/recipe`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) => {
         this.setState({ recipes: recipes.data, open: true });
-      }).catch((err) => console.log(err));
+      }).catch((err) =>  {
+        if (err.response.status == 403) {
+          window.location.href = "/";
+        }
+      });
   };
 
   render() {
-    const showingData = this.props.recipeType == 1;
+    const addedByUser = this.props.recipeType == 1;
     return (
       <Grid contuner item >
       <Card sytle={styleCard} className="Card" spasing={2} sx={{height: "500px",minWidth: "270px",maxWidth: "270px",borderRadius: "30px"}}>
@@ -118,7 +140,7 @@ class Recipe extends Component {
               basedOn='letters'
             />
           </Typography>
-          {showingData ? <PersonalRecipeData {...this.props}> </PersonalRecipeData> : null}
+          {addedByUser ? <PersonalRecipeData {...this.props}> </PersonalRecipeData> : null}
           <Typography variant="body2" color="text.primary" sx={{ fontWeight: 'bold'}}>
             Set day and time:
           </Typography>
@@ -163,6 +185,13 @@ class Recipe extends Component {
             <EventAvailableIcon ></EventAvailableIcon>
             Add to schedule</Fab>
         </CardActions>
+        {!addedByUser ? <>
+          <CardActions>
+          <Fab style={styleFab} onClick={this.handleReport} size="small" variant="extended">
+            <BugReportIcon ></BugReportIcon>
+            Report Recipe</Fab>
+        </CardActions>
+        </>:null}
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -170,7 +199,7 @@ class Recipe extends Component {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            Recipe {this.props.name} has been saved
+            Recipe {this.props.name} {this.dialogMessage}
           </DialogTitle>
 
           <DialogActions>

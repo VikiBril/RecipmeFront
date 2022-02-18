@@ -24,10 +24,22 @@ class UsersRecipes extends Component {
   }
   getUsers() {
     axios
-      .get(`${this.serverUrl}/user/users?userId=michal@gmail.com`)
+      .get(
+        `${this.serverUrl}/user/users?userId=${localStorage.getItem("userId")}`,
+        {
+          headers: {
+            "x-access-token": "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
       .then((users) => {
         console.log({ users });
         this.setState({ users: users.data });
+      })
+      .catch((err) => {
+        if (err.response.status == 403) {
+          window.location.href = "/";
+        }
       });
   }
   componentDidMount() {
@@ -40,8 +52,8 @@ class UsersRecipes extends Component {
           <TableHead>
             <TableRow className="tableRow">
               <TableCell>User name</TableCell>
-              <TableCell align="right">User last name</TableCell>
-              <TableCell align="right">Show weekly schedule</TableCell>
+              <TableCell align="right">User lastname</TableCell>
+              <TableCell align="right">Show Weekly Schedule</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -58,9 +70,9 @@ class UsersRecipes extends Component {
                 </TableCell>
                 <TableCell align="right" key={row.userId}>
                   <Link to={"/Weekly?userId=" + row.userId}>
-                    <Fab className="styleFab" variant="extended">
+                    <Fab className="styleFab" size="small" variant="extended">
                       <EventAvailableIcon></EventAvailableIcon>
-                      Show {row.firstName} schedule
+                      show {row.firstName} schedule
                     </Fab>
                   </Link>
                 </TableCell>

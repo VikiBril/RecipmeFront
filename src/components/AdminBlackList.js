@@ -36,7 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-class AdminApproval extends Component {
+class AdminBlackList extends Component {
   constructor(props) {
     super(props);
     this.state = {recipes: [],dialogOpen:false,recipeStatus:""};
@@ -57,7 +57,7 @@ class AdminApproval extends Component {
   };
 
   searchRecipe() {
-    axios.get(`${this.url}/recipe/approval`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
+    axios.get(`${this.url}/blacklist`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) =>{
         this.setState({ recipes: recipes.data });
       }).catch((err)=>console.log(err));
@@ -67,8 +67,8 @@ class AdminApproval extends Component {
     this.searchRecipe();
   }
   
-  recipeStatus(status, recipeId) {
-    axios.post(`${this.url}/recipe/approval`,{approved:status,id:recipeId},{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
+  recipeStatus(status, url) {
+    axios.put(`${this.url}/blacklist`,{status:status,url:url},{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
     .then(() =>{
       this.handleClickOpen(status);
     }).catch((err) =>  {
@@ -86,28 +86,21 @@ class AdminApproval extends Component {
         <TableHead>
           <TableRow>
             <StyledTableCell>name</StyledTableCell>
-            <StyledTableCell align="canter">ingredientLines</StyledTableCell>
-            <StyledTableCell align="canter">description</StyledTableCell>
-            <StyledTableCell align="canter">image url</StyledTableCell>
-            <StyledTableCell align="canter">url</StyledTableCell>
+            <StyledTableCell align="canter">Recipe Url</StyledTableCell>
             <StyledTableCell align="canter"></StyledTableCell>
             <StyledTableCell align="canter"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {this.state.recipes.map((row) => (
-            <StyledTableRow key={row.name}>
+            <StyledTableRow key={row.url}>
               <StyledTableCell component="th" scope="row">
-                {row.recipeName}
+                {row.url}
               </StyledTableCell>
-              <StyledTableCell align="canter">{row.ingredients}</StyledTableCell>
-              <StyledTableCell align="canter">{row.description}</StyledTableCell>
-              <StyledTableCell align="canter">{row.image}</StyledTableCell>
-              <StyledTableCell align="canter">{row.url}</StyledTableCell>
               <StyledTableCell align="canter">
-                <Button onClick={()=>this.recipeStatus("approved",row['_id'])}>Approve</Button></StyledTableCell>
+                <Button onClick={()=>this.recipeStatus("deleted",row['url'])}>Delete</Button></StyledTableCell>
               <StyledTableCell align="canter">
-                <Button onClick={()=>this.recipeStatus("rejected",row['_id'])}>Reject</Button></StyledTableCell>
+                <Button onClick={()=>this.recipeStatus("rejected",row['url'])}>Reject</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
@@ -130,4 +123,4 @@ class AdminApproval extends Component {
     }
 }
 
-export default AdminApproval;
+export default AdminBlackList;

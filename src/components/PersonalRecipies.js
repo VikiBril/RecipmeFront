@@ -30,61 +30,66 @@ class PersonalRecipes extends Component {
 
   add(name, description, imgurl, day, week, hour, ingredients, repeat, url) {
     const postBody = {
-      day: this.state.day,
-      url: url,
-      imgUrl: imgurl,
-      recipeName: name,
-      user: "michal@gmail.com",
-      week: week,
-      repeat: repeat,
-      hour: hour,
-      day: day,
-      recipeType: 1,
-      ingredients: ingredients,
-      description: description,
-    };
+      "day": this.state.day,
+      "url": url,
+      "imgUrl": imgurl,
+      "recipeName": name,
+      "user": localStorage.getItem("userId"),
+      "week": week,
+      "repeat": repeat,
+      "hour": hour,
+      "day": day,
+      "recipeType": 1,
+      "ingredients": ingredients,
+      "description": description,
+
+    }
     console.log(postBody);
-    axios
-      .post(`${this.serverUrl}/recipe`, postBody)
+    axios.post(`${this.serverUrl}/recipe`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) => {
         console.log("recipe added=]");
-      })
-      .catch((err) => console.log(err));
+      }).catch((err) =>  {
+        if (err.response.status == 403) {
+          window.location.href = "/";
+        }
+      });
   }
-
   delete(id) {
     console.log(id);
-    axios
-      .delete(`${this.serverUrl}/recipe`, {
-        data: {
-          id: id,
-        },
-      })
-      .then(() => {
-        window.location.reload(false);
-      })
-      .catch((err) => console.log(err));
+    axios.delete(`${this.serverUrl}/recipe`,{
+    data: {
+        id: id
+      },
+      headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token")}
+    })
+    .then(() => {
+      window.location.reload(false);
+    }).catch((err) => {
+      console.log(err.response.status);}
+      );
   }
 
   update(recipeData, id) {
-    const putBody = {
-      id: recipeData["id"],
-      url: recipeData["url"],
-      imgurl: recipeData["imgurl"],
-      user: "michal@gmail.com",
-      recipeType: 1,
-      ingredients: recipeData["ingredients"],
-      name: recipeData["name"],
-      description: recipeData["description"],
-    };
-    console.log(putBody);
-    axios
-      .put(`${this.serverUrl}/recipe`, putBody)
-      .then((recipe) => {
+    const postBody = {
+      "id": recipeData['id'],
+      "url": recipeData['url'],
+      "imgurl": recipeData['imgurl'],
+      "user": localStorage.getItem("userId"),
+      "recipeType": 1,
+      "ingredients": recipeData['ingredients'],
+      "name": recipeData['name'],
+      "description": recipeData['description']
+    }
+    console.log(postBody);
+    axios.put(`${this.serverUrl}/recipe`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token")}})
+      .then((recipes) => {
         console.log("recipe updated=]");
         this.setState({ showAddForm: true });
-      })
-      .catch((err) => console.log(err));
+      }).catch((err) =>  {
+        if (err.response.status == 403) {
+          window.location.href = "/";
+        }
+      });
   }
 
   displayAddForm() {
@@ -102,8 +107,7 @@ class PersonalRecipes extends Component {
     const windowUrl = window.location.search;
     const params = new URLSearchParams(windowUrl);
     const recipeId = params.get("recipeId");
-    axios
-      .get(`${this.serverUrl}/recipe?user=michal@gmail.com`)
+    axios.get(`${this.serverUrl}/recipe?user=${localStorage.getItem("userId")}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) => {
         const recipesList = recipes.data;
         if (recipeId != null) {
@@ -113,8 +117,11 @@ class PersonalRecipes extends Component {
           recipesList[0] = tmp;
         }
         this.setState({ recipes: recipesList });
-      })
-      .catch((err) => console.log(err));
+      }).catch((err) =>  {
+        if (err.response.status == 403) {
+          window.location.href = "/";
+        }
+      });
   }
 
   componentDidMount() {
