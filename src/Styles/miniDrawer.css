@@ -16,11 +16,15 @@
     color: rgb(154, 120, 158);
 }
 
-.iconColor{
-    color: rgb(94, 69, 134);
+.iconStyle{
+    color: rgb(144, 128, 170);
 }
 .adminIcons{
+    min-width:auto;
     color: rgb(123, 81, 128);
+}
+.marginLeft35px{
+    margin-left:35px;
 }
 .logOutbutton{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

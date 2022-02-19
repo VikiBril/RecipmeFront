@@ -31,6 +31,7 @@ import MenuBookIcon from "@mui/icons-material/MenuBook";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import HomeIcon from "@mui/icons-material/Home";
 import "../Styles/miniDrawer.css";
+import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -103,6 +104,7 @@ export default function MiniDrawer({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [requestToApprove, setRequestToApprove] = React.useState(0);
+  const { pathname } = useLocation();
 
   const isAdmin = React.useMemo(() => {
     return (
@@ -110,6 +112,11 @@ export default function MiniDrawer({ children }) {
       "Bearer " + localStorage.getItem("token")
     );
   }, []);
+
+  const isInLoginPage = React.useMemo(() => {
+    return pathname === "/";
+  }, [pathname]);
+
   React.useEffect(() => {
     if (isAdmin) {
       axios
@@ -137,14 +144,19 @@ export default function MiniDrawer({ children }) {
     setOpen(false);
   };
 
-  function listOfIcons() {
-    return [
-      { url: "/RecipesList", label: "Home", icon: HomeIcon },
-      { url: "/Weekly", label: "Weekly Schedule", icon: DateRangeIcon },
-      { url: "/myRecipes", label: "My Recipes", icon: MenuBookIcon },
-      { url: "/UsersRecipes", label: "Users", icon: AccountBoxIcon },
-    ];
-  }
+  const listOfIcons = React.useMemo(() => {
+    const list = [{ url: "/RecipesList", label: "Home", icon: HomeIcon }];
+    if (!isInLoginPage) {
+      list.push({
+        url: "/Weekly",
+        label: "Weekly Schedule",
+        icon: DateRangeIcon,
+      });
+      list.push({ url: "/myRecipes", label: "My Recipes", icon: MenuBookIcon });
+      list.push({ url: "/UsersRecipes", label: "Users", icon: AccountBoxIcon });
+    }
+    return list;
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -189,12 +201,12 @@ export default function MiniDrawer({ children }) {
         </DrawerHeader>
         <Divider />
         <List className="drawerLabel">
-          {listOfIcons().map((item, index) => {
+          {listOfIcons.map((item, index) => {
             const { label, url, icon: Icon } = item;
             return (
               <NavLink key={`${url}-${index}`} to={`${url}`}>
                 <ListItem button key={label}>
-                  <Icon className={"iconColor"}></Icon>
+                  <Icon className={"iconStyle"}></Icon>
                   <ListItemText className="listLabel" primary={label} />
                 </ListItem>
               </NavLink>
@@ -202,7 +214,7 @@ export default function MiniDrawer({ children }) {
           })}
         </List>
         <Divider />
-        {localStorage.getItem("userType") == 0 ? (
+        {localStorage.getItem("userType") == 0 && !isInLoginPage ? (
           <>
             <List>
               {[
@@ -220,7 +232,7 @@ export default function MiniDrawer({ children }) {
                   <NavLink key={`${url}-${index}`} to={`${url}`}>
                     <ListItem button key={label}>
                       {!!showBadge ? (
-                        <Badge badgeContent={requestToApprove} color="primary">
+                        <Badge badgeContent={requestToApprove} color="error">
                           <ListItemIcon className="adminIcons">
                             {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                           </ListItemIcon>
@@ -231,7 +243,10 @@ export default function MiniDrawer({ children }) {
                         </ListItemIcon>
                       )}
 
-                      <ListItemText primary={label} />
+                      <ListItemText
+                        className="marginLeft35px"
+                        primary={label}
+                      />
                     </ListItem>
                   </NavLink>
                 );

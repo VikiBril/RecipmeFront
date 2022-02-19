@@ -30,25 +30,30 @@ class PersonalRecipes extends Component {
 
   add(name, description, imgurl, day, week, hour, ingredients, repeat, url) {
     const postBody = {
-      "day": this.state.day,
-      "url": url,
-      "imgUrl": imgurl,
-      "recipeName": name,
-      "user": localStorage.getItem("userId"),
-      "week": week,
-      "repeat": repeat,
-      "hour": hour,
-      "day": day,
-      "recipeType": 1,
-      "ingredients": ingredients,
-      "description": description,
-
-    }
+      day: this.state.day,
+      url: url,
+      imgUrl: imgurl,
+      recipeName: name,
+      user: localStorage.getItem("userId"),
+      week: week,
+      repeat: repeat,
+      hour: hour,
+      day: day,
+      recipeType: 1,
+      ingredients: ingredients,
+      description: description,
+    };
     console.log(postBody);
-    axios.post(`${this.serverUrl}/recipe`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
+    axios
+      .post(`${this.serverUrl}/recipe`, postBody, {
+        headers: {
+          "x-access-token": "Bearer " + localStorage.getItem("token"),
+        },
+      })
       .then((recipes) => {
         console.log("recipe added=]");
-      }).catch((err) =>  {
+      })
+      .catch((err) => {
         if (err.response.status == 403) {
           window.location.href = "/";
         }
@@ -56,36 +61,47 @@ class PersonalRecipes extends Component {
   }
   delete(id) {
     console.log(id);
-    axios.delete(`${this.serverUrl}/recipe`,{
-    data: {
-        id: id
-      },
-      headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token")}
-    })
-    .then(() => {
-      window.location.reload(false);
-    }).catch((err) => {
-      console.log(err.response.status);}
-      );
+    axios
+      .delete(`${this.serverUrl}/recipe`, {
+        data: {
+          id: id,
+        },
+        headers: {
+          "x-access-token": "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+      });
   }
 
   update(recipeData, id) {
     const postBody = {
-      "id": recipeData['id'],
-      "url": recipeData['url'],
-      "imgurl": recipeData['imgurl'],
-      "user": localStorage.getItem("userId"),
-      "recipeType": 1,
-      "ingredients": recipeData['ingredients'],
-      "name": recipeData['name'],
-      "description": recipeData['description']
-    }
+      id: recipeData["id"],
+      url: recipeData["url"],
+      imgurl: recipeData["imgurl"],
+      user: localStorage.getItem("userId"),
+      recipeType: 1,
+      ingredients: recipeData["ingredients"],
+      name: recipeData["name"],
+      description: recipeData["description"],
+    };
     console.log(postBody);
-    axios.put(`${this.serverUrl}/recipe`, postBody,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token")}})
-      .then((recipes) => {
+    axios
+      .put(`${this.serverUrl}/recipe`, postBody, {
+        headers: {
+          "x-access-token": "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((recipe) => {
+        window.location.reload();
         console.log("recipe updated=]");
         this.setState({ showAddForm: true });
-      }).catch((err) =>  {
+      })
+      .catch((err) => {
         if (err.response.status == 403) {
           window.location.href = "/";
         }
@@ -107,7 +123,12 @@ class PersonalRecipes extends Component {
     const windowUrl = window.location.search;
     const params = new URLSearchParams(windowUrl);
     const recipeId = params.get("recipeId");
-    axios.get(`${this.serverUrl}/recipe?user=${localStorage.getItem("userId")}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
+    axios
+      .get(`${this.serverUrl}/recipe?user=${localStorage.getItem("userId")}`, {
+        headers: {
+          "x-access-token": "Bearer " + localStorage.getItem("token"),
+        },
+      })
       .then((recipes) => {
         const recipesList = recipes.data;
         if (recipeId != null) {
@@ -117,7 +138,8 @@ class PersonalRecipes extends Component {
           recipesList[0] = tmp;
         }
         this.setState({ recipes: recipesList });
-      }).catch((err) =>  {
+      })
+      .catch((err) => {
         if (err.response.status == 403) {
           window.location.href = "/";
         }

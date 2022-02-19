@@ -16,6 +16,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DatePicker";
 import Slider from "@mui/material/Slider";
 import { weekNumber, dayNumber } from "weeknumber";
+import TextField from "@mui/material/TextField";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 const marks = [
   {
@@ -132,17 +133,21 @@ class RecipeForms extends Component {
   }
 
   updateRecipe() {
-    this.props.updateRecipe(
-      {
-        description: this.description,
-        imgurl: this.imgurl,
-        name: this.name,
-        ingredients: this.ingredients,
-        url: this.url,
-        id: this.recipeId,
-      },
-      this.recipeId
-    );
+    if (!this.name) {
+      alert("Missing required fields");
+    } else {
+      this.props.updateRecipe(
+        {
+          description: this.description,
+          imgurl: this.imgurl,
+          name: this.name,
+          ingredients: this.ingredients,
+          url: this.url,
+          id: this.recipeId,
+        },
+        this.recipeId
+      );
+    }
   }
 
   renderAdd() {
@@ -165,15 +170,23 @@ class RecipeForms extends Component {
               sx={{ width: "90%", marginLeft: "5%" }}
               variant="standard"
             >
-              <InputLabel style={labelStyle} shrink htmlFor="locationInput">
+              {/* <InputLabel style={labelStyle} shrink htmlFor="locationInput">
                 Name
-              </InputLabel>
-              <BootstrapInput
+              </InputLabel> */}
+              <TextField
+                required
+                label="Name"
+                placeholder="Name"
+                id="NameInput"
+                value={this.name || ""}
+                onChange={(event) => (this.name = event.target.value)}
+              />
+              {/* <BootstrapInput
                 placeholder="Name"
                 sx={{ width: "100%" }}
                 id="NameInput"
                 onChange={(event) => (this.name = event.target.value)}
-              />
+              /> */}
 
               <InputLabel style={labelStyle} shrink htmlFor="locationInput">
                 Time
