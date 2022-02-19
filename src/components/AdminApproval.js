@@ -64,6 +64,7 @@ class AdminApproval extends Component {
   }
 
   componentDidMount(){
+    
     this.searchRecipe();
   }
   

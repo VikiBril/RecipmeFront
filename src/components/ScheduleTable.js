@@ -40,7 +40,7 @@ class ScheduleTable extends Component {
     return this.props.recipes != null ? (
       <TableContainer component={Paper}>
         <Typography className="HPage" component="div" gutterBottom>
-          Weekly meal schedule of {this.props.name}
+          Weekly meal schedule of {localStorage.getItem('userName')}
         </Typography>
         <Table
           sx={{ width: "900px", margin: "100px" }}

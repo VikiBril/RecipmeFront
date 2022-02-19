@@ -22,6 +22,12 @@ class WeeklySched extends Component {
         
     }
 
+    openRecipeData(){
+        this.setState({
+            dataOpen:true
+          })
+    }
+
     remove(id) {
         const postBody = {
           "id": id,

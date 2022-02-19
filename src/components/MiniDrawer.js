@@ -118,6 +118,10 @@ export default function MiniDrawer({ children }) {
   }, [pathname]);
 
   React.useEffect(() => {
+      if (localStorage.getItem("token") == null) {
+        window.location = "/";
+      }
+  
     if (isAdmin) {
       axios
         .get(`http://localhost:3001/recipe/approval`, {

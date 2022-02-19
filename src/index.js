@@ -12,7 +12,6 @@ import "./index.css";
 ReactDOM.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
-      {/* <App /> */}
       <BrowserRouter>
         <MiniDrawer>
           <AppRouter />
