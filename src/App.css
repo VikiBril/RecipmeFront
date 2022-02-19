@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+.logOutbuttn{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:rgb(123, 81, 128);
+    font-size: 9px;
+    width: 40px;
+    height: 25px;
+    margin-left: 10px;
+}

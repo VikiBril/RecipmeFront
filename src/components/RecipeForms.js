@@ -17,6 +17,8 @@ import DesktopDatePicker from "@mui/lab/DatePicker";
 import Slider from "@mui/material/Slider";
 import { weekNumber, dayNumber } from "weeknumber";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+import "../Styles/recipeForms.css";
+
 const marks = [
   {
     value: 1,
@@ -46,7 +48,7 @@ export const labelStyle = {
 };
 
 const styleCard = {
-  fontFamily: "Arial",
+  fontFamily: "Lucida Sans",
   color: "#77787B",
   width: "418px",
   height: "752px",
@@ -151,6 +153,7 @@ class RecipeForms extends Component {
         <Card style={styleCard}>
           <Grid container>
             <Typography
+              className="HofThePage"
               sx={{
                 marginLeft: "25%",
                 marginTop: "20px",

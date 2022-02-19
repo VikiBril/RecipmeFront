@@ -163,7 +163,7 @@ export default function MiniDrawer({ children }) {
             <MenuIcon />
           </IconButton>
           {localStorage.getItem("userId") == null ? null : (
-            <Fab className="logOutbutton" onClick={handleLogout}>
+            <Fab className="logOutbuttn" onClick={handleLogout}>
               Log out
             </Fab>
           )}
@@ -188,11 +188,15 @@ export default function MiniDrawer({ children }) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List className="drawerLabel">
+        <List>
           {listOfIcons().map((item, index) => {
             const { label, url, icon: Icon } = item;
             return (
-              <NavLink key={`${url}-${index}`} to={`${url}`}>
+              <NavLink
+                className="drawerLabel"
+                key={`${url}-${index}`}
+                to={`${url}`}
+              >
                 <ListItem button key={label}>
                   <Icon className={"iconColor"}></Icon>
                   <ListItemText className="listLabel" primary={label} />
@@ -214,13 +218,17 @@ export default function MiniDrawer({ children }) {
                 { url: "/AdminBlackList", label: "Delete requests" },
               ].map((item, index) => {
                 const { label, url, icon } = item;
-                const showBadge = isAdmin && url === "/AdminApproval";
+                const showBadge = isAdmin && icon === MoveToInboxIcon;
                 console.log(requestToApprove);
                 return (
                   <NavLink key={`${url}-${index}`} to={`${url}`}>
                     <ListItem button key={label}>
                       {!!showBadge ? (
-                        <Badge badgeContent={requestToApprove} color="primary">
+                        <Badge
+                          className="notificationsBubble"
+                          badgeContent={requestToApprove}
+                          color="error"
+                        >
                           <ListItemIcon className="adminIcons">
                             {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                           </ListItemIcon>
