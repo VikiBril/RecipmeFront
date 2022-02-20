@@ -30,7 +30,7 @@ const styleFab = {
   color: "white",
 };
 const styleCard = {
-  width: "150px" ,
+  width: "160px" ,
   alignItems: 'center',
   fontFamily: "Arial",
   left: "10px",
@@ -38,6 +38,7 @@ const styleCard = {
   backgroundColor: "#FFFFFF",
   boxShadow: "0px 100px 80px rgba(153, 165, 236, 0.05), 0px 64.8148px 46.8519px rgba(153, 165, 236, 0.037963), 0px 38.5185px 25.4815px rgba(153, 165, 236, 0.0303704), 0px 20px 13px rgba(153, 165, 236, 0.025), 0px 8.14815px 6.51852px rgba(153, 165, 236, 0.0196296), 0px 1.85185px 3.14815px rgba(153, 165, 236, 0.012037)",
 };
+
 
 
 class Recipe extends Component {
@@ -115,7 +116,7 @@ class Recipe extends Component {
     const addedByUser = this.props.recipeType == 1;
     return (
       <Grid contuner item >
-      <Card sytle={styleCard} className="Card" spasing={2} sx={{height: "500px",minWidth: "270px",maxWidth: "270px",borderRadius: "30px"}}>
+      <Card sytle={styleCard} className="Card" spasing={2} sx={{maxHeight: "510px",height: "510px",minWidth: "270px",maxWidth: "270px",borderRadius: "30px"}}>
         <CardActions>
         <CardMedia sx={{ maxHeight: "150px" }}
           component="img"

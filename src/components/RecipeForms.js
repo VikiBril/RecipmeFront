@@ -15,9 +15,28 @@ import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DatePicker";
 import Slider from "@mui/material/Slider";
-import { weekNumber, dayNumber } from "weeknumber";
+import { weekNumber } from "weeknumber";
 import TextField from "@mui/material/TextField";
-import EventAvailableIcon from "@mui/icons-material/EventAvailable";
+const addIcon = {
+  width: "52px",
+  height: "52px",
+  marginLeft: "32%",
+  border: "2.10345px solid #FFFFFF",
+  boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
+  backgroundColor: "#8fcbd9",
+  color: "white",
+  marginTop: "-5%",
+};
+const updateIcon = {
+  width: "52px",
+  height: "52px",
+  border: "2.10345px solid #FFFFFF",
+  boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
+  backgroundColor: "#8fcbd9",
+  color: "white",
+  marginTop: "-9%",
+};
+
 const marks = [
   {
     value: 1,
@@ -58,15 +77,7 @@ const styleCard = {
   borderRadius: "25px",
 };
 
-const styleFab = {
-  width: "52px",
-  height: "52px",
-  border: "2.10345px solid #FFFFFF",
-  boxShadow: "0px 4.2069px 4.2069px rgba(236, 236, 236, 1)",
-  backgroundColor: "#8fcbd9",
-  color: "white",
-  marginTop: "-10%",
-};
+
 
 const BootstrapInput = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
@@ -170,9 +181,7 @@ class RecipeForms extends Component {
               sx={{ width: "90%", marginLeft: "5%" }}
               variant="standard"
             >
-              {/* <InputLabel style={labelStyle} shrink htmlFor="locationInput">
-                Name
-              </InputLabel> */}
+
               <TextField
                 required
                 label="Name"
@@ -181,12 +190,6 @@ class RecipeForms extends Component {
                 value={this.name || ""}
                 onChange={(event) => (this.name = event.target.value)}
               />
-              {/* <BootstrapInput
-                placeholder="Name"
-                sx={{ width: "100%" }}
-                id="NameInput"
-                onChange={(event) => (this.name = event.target.value)}
-              /> */}
 
               <InputLabel style={labelStyle} shrink htmlFor="locationInput">
                 Time
@@ -282,7 +285,7 @@ class RecipeForms extends Component {
             </FormGroup>
           </Grid>
         </Card>
-        <Fab size="medium" style={styleFab} aria-label="add">
+        <Fab size="medium" style={addIcon} aria-label="add">
           <AddIcon onClick={(event) => this.addRecipe(event)} />
         </Fab>
       </div>
@@ -295,9 +298,9 @@ class RecipeForms extends Component {
         <Card style={styleCard}>
           <Typography
             sx={{
-              fontFamily: "Alef",
+              fontFamily: "Arial",
               marginTop: "20px",
-              marginLeft: "220px",
+              marginLeft: "30%",
               fontSize: "25px",
               color: "black",
             }}
@@ -370,7 +373,7 @@ class RecipeForms extends Component {
               aria-label="maximum height"
               placeholder="Maximum 4 rows"
               defaultValue={this.description}
-              style={{ width: 500 }}
+              style={{ width: 300 }}
               onChange={(event) => (this.description = event.target.value)}
             />
 
@@ -397,10 +400,10 @@ class RecipeForms extends Component {
             />
           </FormGroup>
         </Card>
-        <Box sx={{ marginLeft: "36%" }}>
+        <Box style={{marginLeft: "32%"}}>
           <Fab
+            style={updateIcon}
             size="medium"
-            style={styleFab}
             aria-label="update"
             onClick={(event) => {
               this.props.disableForm(event);
@@ -409,9 +412,9 @@ class RecipeForms extends Component {
             <CloseIcon />
           </Fab>
           <Fab
+            style={updateIcon}
             size="medium"
             margin="25%"
-            style={styleFab}
             aria-label="add"
             onClick={(event) => {
               this.updateRecipe(event);

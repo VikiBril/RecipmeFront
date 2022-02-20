@@ -39,7 +39,7 @@ class ScheduleTable extends Component {
     console.log("===" +this.props.userId);
     return this.props.recipes != null ? (
       <TableContainer component={Paper}>
-        <Typography className="HPage" component="div" gutterBottom>
+        <Typography variant="h3" className="HPage" component="div" gutterBottom>
           Weekly meal schedule of {this.props.userId}
         </Typography>
         <Table

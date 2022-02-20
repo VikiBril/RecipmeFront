@@ -51,6 +51,7 @@ class PersonalRecipes extends Component {
         },
       })
       .then((recipes) => {
+        window.location.reload();
         console.log("recipe added=]");
       })
       .catch((err) => {

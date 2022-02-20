@@ -7,6 +7,7 @@ import { Navigate  } from 'react-router-dom';
 
 const paperStyle = {
   padding: 20,
+  minHeight: "78vh",
   height: "78vh",
   width: 300,
   margin: "20px auto",

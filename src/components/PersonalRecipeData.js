@@ -15,8 +15,8 @@ const styleFab = {
   color: "white",
 };
 const styleBoxIcon = {
-  marginLeft: "200px",
-  marginTop: "-19px",
+  position: 'relative',
+  marginLeft: "53%",
 };
 class PersonalRecipeData extends Component {
   constructor(props) {
