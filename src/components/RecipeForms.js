@@ -180,6 +180,7 @@ class RecipeForms extends Component {
             <InputLabel style={labelStyle} shrink htmlFor="nameInput">
               Name
             </InputLabel>
+            <BootstrapInput defaultValue={this.name} placeholder="Name" sx={{ width: "100%" }} id="NameInput" onChange={event => this.name = event.target.value} 
 
               <InputLabel style={labelStyle} shrink htmlFor="timeInput">
                 Time
