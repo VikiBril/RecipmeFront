@@ -36,11 +36,11 @@ const meals = ["Breakfest", "Lunch", "Dinner"];
 
 class ScheduleTable extends Component {
   render() {
-    console.log(this.props.recipes);
+    console.log("===" +this.props.userId);
     return this.props.recipes != null ? (
       <TableContainer component={Paper}>
         <Typography className="HPage" component="div" gutterBottom>
-          Weekly meal schedule of {localStorage.getItem('userName')}
+          Weekly meal schedule of {this.props.userId}
         </Typography>
         <Table
           sx={{ width: "900px", margin: "100px" }}
@@ -200,9 +200,7 @@ class ScheduleTable extends Component {
           </TableBody>
         </Table>
       </TableContainer>
-    ) : (
-      <div>ehh</div>
-    );
+    ) : null;
   }
 }
 export default ScheduleTable;

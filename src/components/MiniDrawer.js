@@ -118,13 +118,9 @@ export default function MiniDrawer({ children }) {
   }, [pathname]);
 
   React.useEffect(() => {
-      if (localStorage.getItem("token") == null) {
-        window.location = "/";
-      }
-  
     if (isAdmin) {
       axios
-        .get(`http://localhost:3001/recipe/approval`, {
+        .get(`https://recipmeapp.herokuapp.com/recipe/approval`, {
           headers: {
             "x-access-token": "Bearer " + localStorage.getItem("token"),
           },
@@ -149,15 +145,17 @@ export default function MiniDrawer({ children }) {
   };
 
   const listOfIcons = React.useMemo(() => {
-    const list = [{ url: "/RecipesList", label: "Home", icon: HomeIcon }];
+    const list = [];
     if (!isInLoginPage) {
       list.push({
         url: "/Weekly",
         label: "Weekly Schedule",
         icon: DateRangeIcon,
       });
+      list.push({ url: "/RecipesList", label: "Home", icon: HomeIcon });
       list.push({ url: "/myRecipes", label: "My Recipes", icon: MenuBookIcon });
       list.push({ url: "/UsersRecipes", label: "Users", icon: AccountBoxIcon });
+
     }
     return list;
   }, []);

@@ -53,7 +53,7 @@ class Recipe extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.handelUrl=this.handelUrl.bind(this);
     this.handleReport=this.handleReport.bind(this);
-    this.serverUrl = "http://localhost:3001"
+    this.serverUrl = "https://recipmeapp.herokuapp.com"
   }
 
   handelUrl(){
@@ -83,7 +83,7 @@ class Recipe extends Component {
   }
 
   handleClick() {
-    const url = "http://localhost:3001";
+    const url = "https://recipmeapp.herokuapp.com";
     var week = weekNumber(new Date());
     const approved = this.props.status;
 

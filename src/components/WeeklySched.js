@@ -12,7 +12,7 @@ class WeeklySched extends Component {
         super(props);
         const week = weekNumber(new Date());
         this.state = {week: week,recipes: null, dialogOpen:false};
-        this.url = "http://localhost:3001";
+        this.url = "https://recipmeapp.herokuapp.com";
         this.recipeUrl = ""
         this.recipeName = ""
         this.recipeId = ""
@@ -21,6 +21,7 @@ class WeeklySched extends Component {
         const params = new URLSearchParams(windowUrl);
         console.log(params.get("userId"));
         this.userId = params.get("userId") != null ? params.get("userId") :localStorage.getItem("userId");
+        this.userNameTable =  params.get("userName") != null ? params.get("userName") :localStorage.getItem("userName");
         this.isOwner = this.userId == localStorage.getItem("userId");
         this.getRecipies = this.getRecipies.bind(this);
         this.closeDialog = this.closeDialog.bind(this);
@@ -122,6 +123,7 @@ class WeeklySched extends Component {
 
         <ScheduleTable
           key={1}
+          userId = {this.userNameTable}
           recipes={this.state.recipes}
           openDialog={this.openDialog}
         ></ScheduleTable>

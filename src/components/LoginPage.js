@@ -3,6 +3,7 @@ import Logo from "../assets.media/Logo.jpg";
 import axios from "axios";
 import { Grid, Paper, TextField, Button } from "@material-ui/core";
 import "../App.css";
+import { Navigate  } from 'react-router-dom';
 
 const paperStyle = {
   padding: 20,
@@ -26,6 +27,7 @@ class Login extends Component {
     this.state = {
       userId: "",
       password: "",
+      redirect:false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,7 +38,7 @@ class Login extends Component {
   };
 
   handleSubmit = (event) => {
-    const url = "http://localhost:3001";
+    const url = "https://recipmeapp.herokuapp.com";
     const userData = {
       userId: this.state.userId,
       password: this.state.password,
@@ -54,13 +56,14 @@ class Login extends Component {
         localStorage.setItem("userName", res.data.user.userName);
         localStorage.setItem("userType", res.data.user.userType);
         localStorage.setItem("token", res.data.accessToken);
-        window.location.href = "/RecipesList";
+        window.location="/RecipesList"
       })
       .catch((err) => console.log(err));
   };
   render() {
     return (
       <Grid>
+        { this.state.redirect ? (<Navigate  to="/RecipesList"/>) : null }
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center"></Grid>
           <img src={Logo} alt="Logo" style={styleImg} />

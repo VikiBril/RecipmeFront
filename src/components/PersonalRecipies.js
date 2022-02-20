@@ -9,7 +9,7 @@ class PersonalRecipes extends Component {
   constructor(props) {
     super(props);
     const week = weekNumber(new Date());
-    this.serverUrl = "http://localhost:3001";
+    this.serverUrl = "https://recipmeapp.herokuapp.com";
     this.state = {
       recipes: [],
       week: week,

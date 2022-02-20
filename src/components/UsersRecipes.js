@@ -16,7 +16,7 @@ class UsersRecipes extends Component {
   constructor(props) {
     super(props);
     //const week = weekNumber(new Date());
-    this.serverUrl = "http://localhost:3001";
+    this.serverUrl = "https://recipmeapp.herokuapp.com";
     this.state = {
       users: [],
     };
@@ -69,7 +69,7 @@ class UsersRecipes extends Component {
                   {row.lastName}
                 </TableCell>
                 <TableCell align="right" key={row.userId}>
-                  <Link to={"/Weekly?userId=" + row.userId}>
+                  <Link to={"/Weekly?userId=" + row.userId+"&userName=" + row.firstName}>
                     <Fab className="styleFab" size="small" variant="extended">
                       <EventAvailableIcon></EventAvailableIcon>
                       show {row.firstName} schedule

@@ -17,7 +17,7 @@ class RecipesList extends Component {
   }
 
   searchRecipe(ingredients) {
-    const url = "http://localhost:3001";
+    const url = "https://recipmeapp.herokuapp.com";
     axios.get(`${url}/recipe/ingredients?ingredients=${ingredients}`,{headers:{ 'x-access-token': "Bearer "+localStorage.getItem("token") }})
       .then((recipes) => {
         this.setState({ recipes: recipes.data });

@@ -41,7 +41,7 @@ class AdminBlackList extends Component {
     super(props);
     this.state = {recipes: [],dialogOpen:false,recipeStatus:""};
     this.searchRecipe = this.searchRecipe.bind(this);
-    this.url = "http://localhost:3001";
+    this.url = "https://recipmeapp.herokuapp.com";
     this.handleClickOpen = this.handleClickOpen.bind(this);
     this.handleClose = this.handleClose.bind(this)
     this.searchRecipe = this.searchRecipe.bind(this);

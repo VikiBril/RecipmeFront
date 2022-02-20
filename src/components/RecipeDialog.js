@@ -10,7 +10,7 @@ import axios from "axios";
 class WeeklySched extends Component {
     constructor(props) {
         super(props);
-        this.serverUrl = "http://localhost:3001";
+        this.serverUrl = "https://recipmeapp.herokuapp.com";
         this.openRecipeData = this.openRecipeData.bind(this);
         this.render = this.render.bind(this);
         this.state = {
