@@ -182,8 +182,7 @@ class RecipeForms extends Component {
               variant="standard"
             >
 
-              <TextField
-                required
+              <InputLabel
                 label="Name"
                 placeholder="Name"
                 id="NameInput"
