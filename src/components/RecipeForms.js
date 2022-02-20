@@ -144,9 +144,6 @@ class RecipeForms extends Component {
   }
 
   updateRecipe() {
-    if (!this.name) {
-      alert("Missing required fields");
-    } else {
       this.props.updateRecipe(
         {
           description: this.description,
@@ -158,7 +155,6 @@ class RecipeForms extends Component {
         },
         this.recipeId
       );
-    }
   }
 
   renderAdd() {
@@ -181,16 +177,11 @@ class RecipeForms extends Component {
               sx={{ width: "90%", marginLeft: "5%" }}
               variant="standard"
             >
+            <InputLabel style={labelStyle} shrink htmlFor="nameInput">
+              Name
+            </InputLabel>
 
-              <InputLabel
-                label="Name"
-                placeholder="Name"
-                id="NameInput"
-                value={this.name || ""}
-                onChange={(event) => (this.name = event.target.value)}
-              />
-
-              <InputLabel style={labelStyle} shrink htmlFor="locationInput">
+              <InputLabel style={labelStyle} shrink htmlFor="timeInput">
                 Time
               </InputLabel>
               <Select
@@ -208,7 +199,7 @@ class RecipeForms extends Component {
                 <MenuItem value={3}>Dinner</MenuItem>
               </Select>
 
-              <InputLabel style={labelStyle} shrink htmlFor="locationInput">
+              <InputLabel style={labelStyle} shrink htmlFor="dateInput">
                 Date
               </InputLabel>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
